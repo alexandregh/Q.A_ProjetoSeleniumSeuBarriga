@@ -11,7 +11,6 @@ import java.util.Date;
 import static core.drivefactory.DriveFactory.getDriver;
 
 public class Assistant extends DSLBase {
-    private static int contador = 1;
     public static void executarInserirConta() {
         Conta conta = new Conta();
         conta.setIdentificadorNome("nome");
@@ -35,14 +34,13 @@ public class Assistant extends DSLBase {
         getDriver().findElement(By.id(conta.getIdentificadorNome())).sendKeys(conta.getNome());
         getDriver().findElement(By.xpath("//button[normalize-space()='Salvar']")).click();
 
-        String msgConta = retornarMensagemTela("");
+        String msgConta;
         msgConta = retornarMensagemTela(getDriver().findElement(By.xpath("//div[@role='alert']")).getText());
         Assert.assertEquals("Conta adicionada com sucesso!",msgConta);
     }
     public static String retornarDataAtual() {
         Date dataAtual = new Date();
-        String dataFormatada = new SimpleDateFormat("dd/MM/yyyy").format(dataAtual);
-        return dataFormatada;
+        return new SimpleDateFormat("dd/MM/yyyy").format(dataAtual);
     }
     public static String retornarMesAnoAtual(String dataAtual) {
         int mes; int ano;
@@ -57,8 +55,7 @@ public class Assistant extends DSLBase {
             mesString = "0" + mes;
         }
 
-        String dataMesAno = mesString + "/" + ano;
-        return dataMesAno;
+        return mesString + "/" + ano;
     }
     public static String[] retornarVetorDiaMesAnoAtual(String dataAtual) {
         int dia; int mes; int ano;
@@ -82,7 +79,6 @@ public class Assistant extends DSLBase {
         }
 
         String dataMesAno = diaString + "/" + mesString + "/" + ano;
-        String[] vetorDataMesAno = dataMesAno.split("/");
-        return vetorDataMesAno;
+        return dataMesAno.split("/");
     }
 }

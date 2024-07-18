@@ -18,15 +18,14 @@ public class TestMovimentacao extends BaseTest {
     private PageMovimentacao pageMovimentacao;
     private Login login;
     private Movimentacao movimentacao;
-    private BaseTest baseTest;
-    private String nomeClasse;
+
     @Before
     public void inicializar() {
         pageMovimentacao = new PageMovimentacao();
         login = new Login();
         movimentacao = new Movimentacao();
-        baseTest = new BaseTest();
-        nomeClasse = this.getClass().getSimpleName();
+        BaseTest baseTest = new BaseTest();
+        String nomeClasse = this.getClass().getSimpleName();
         baseTest.definirNomeClasse(nomeClasse);
         getDriver().get("https://seubarriga.wcaquino.me/");
     }

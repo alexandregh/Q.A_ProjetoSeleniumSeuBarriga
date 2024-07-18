@@ -18,15 +18,14 @@ public class TestResumoMensal extends BaseTest {
     private PageResumoMensal pageResumoMensal;
     private Login login;
     private ResumoMensal resumoMensal;
-    private BaseTest baseTest;
-    private String nomeClasse;
+
     @Before
     public void inicializar() {
         pageResumoMensal = new PageResumoMensal();
         login = new Login();
         resumoMensal = new ResumoMensal();
-        baseTest = new BaseTest();
-        nomeClasse = this.getClass().getSimpleName();
+        BaseTest baseTest = new BaseTest();
+        String nomeClasse = this.getClass().getSimpleName();
         baseTest.definirNomeClasse(nomeClasse);
         getDriver().get("https://seubarriga.wcaquino.me/");
     }

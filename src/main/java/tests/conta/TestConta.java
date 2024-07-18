@@ -18,15 +18,14 @@ public class TestConta extends BaseTest {
     private PageConta pageConta;
     private Login login;
     private Conta conta;
-    private BaseTest baseTest;
-    private String nomeClasse;
+
     @Before
     public void inicializar() {
         pageConta = new PageConta();
         login = new Login();
         conta = new Conta();
-        baseTest = new BaseTest();
-        nomeClasse = this.getClass().getSimpleName();
+        BaseTest baseTest = new BaseTest();
+        String nomeClasse = this.getClass().getSimpleName();
         baseTest.definirNomeClasse(nomeClasse);
         getDriver().get("https://seubarriga.wcaquino.me/");
     }

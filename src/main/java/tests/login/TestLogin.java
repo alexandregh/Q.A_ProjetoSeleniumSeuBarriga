@@ -16,14 +16,13 @@ import static core.drivefactory.DriveFactory.killDriver;
 public class TestLogin extends BaseTest {
     private PageLogin pageLogin;
     private Login login;
-    private BaseTest baseTest;
-    private String nomeClasse;
+
     @Before
     public void inicializar() {
         pageLogin = new PageLogin();
         login = new Login();
-        baseTest = new BaseTest();
-        nomeClasse = this.getClass().getSimpleName();
+        BaseTest baseTest = new BaseTest();
+        String nomeClasse = this.getClass().getSimpleName();
         baseTest.definirNomeClasse(nomeClasse);
         getDriver().get("https://seubarriga.wcaquino.me/");
     }

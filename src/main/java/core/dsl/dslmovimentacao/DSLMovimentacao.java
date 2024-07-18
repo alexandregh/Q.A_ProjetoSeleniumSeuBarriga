@@ -35,7 +35,7 @@ public class DSLMovimentacao extends BaseTest {
         if (tabelaVazia.equals("")) {
             executarInserirConta();
         }
-        String msgDataMovimentacao = retornarMensagemTela("");
+        String msgDataMovimentacao;
 
         getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Criar Movimentação']")).click();
 
@@ -77,7 +77,7 @@ public class DSLMovimentacao extends BaseTest {
         if (tabelaVazia.equals("")) {
             executarInserirConta();
         }
-        String msgDataMovimentacao = retornarMensagemTela("");
+        String msgDataMovimentacao;
 
         getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Criar Movimentação']")).click();
 
@@ -119,7 +119,7 @@ public class DSLMovimentacao extends BaseTest {
         if (tabelaVazia.equals("")) {
             executarInserirConta();
         }
-        String msgDataMovimentacao = retornarMensagemTela("");
+        String msgDataMovimentacao;
 
         getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Criar Movimentação']")).click();
 
@@ -161,9 +161,9 @@ public class DSLMovimentacao extends BaseTest {
         if (tabelaVazia.equals("")) {
             executarInserirConta();
         }
-        String msgDataMovimentacao = retornarMensagemTela("");
+        String msgDataMovimentacao;
         String dataAtual = retornarDataAtual();
-        String dataMovimentacaoMaiorDataAtual = retornarDataMovimentacaoMaiorDataAtual(dataAtual);
+        String dataMovimentacaoMaiorDataAtual = retornarDataMovimentacaoMaiorDataAtual();
 
         getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Criar Movimentação']")).click();
 
@@ -205,7 +205,7 @@ public class DSLMovimentacao extends BaseTest {
         if (tabelaVazia.equals("")) {
             executarInserirConta();
         }
-        String msgDataMovimentacao = retornarMensagemTela("");
+        String msgDataMovimentacao;
 
         getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Criar Movimentação']")).click();
 
@@ -247,7 +247,7 @@ public class DSLMovimentacao extends BaseTest {
         if (tabelaVazia.equals("")) {
             executarInserirConta();
         }
-        String msgDataMovimentacao = retornarMensagemTela("");
+        String msgDataMovimentacao;
 
         getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Criar Movimentação']")).click();
 
@@ -289,7 +289,7 @@ public class DSLMovimentacao extends BaseTest {
         if (tabelaVazia.equals("")) {
             executarInserirConta();
         }
-        String msgDataMovimentacao = retornarMensagemTela("");
+        String msgDataMovimentacao;
 
         getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Criar Movimentação']")).click();
 
@@ -331,7 +331,7 @@ public class DSLMovimentacao extends BaseTest {
         if (tabelaVazia.equals("")) {
             executarInserirConta();
         }
-        String msgDataMovimentacao = retornarMensagemTela("");
+        String msgDataMovimentacao;
 
         getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Criar Movimentação']")).click();
 
@@ -373,7 +373,7 @@ public class DSLMovimentacao extends BaseTest {
         if (tabelaVazia.equals("")) {
             executarInserirConta();
         }
-        String msgCadastroSucesso = retornarMensagemTela("");
+        String msgCadastroSucesso;
 
         getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Criar Movimentação']")).click();
 
@@ -384,16 +384,14 @@ public class DSLMovimentacao extends BaseTest {
         movimentacao.setConta(comboSelectTipoMovimentacao.getFirstSelectedOption().getText());
 
         String dataAtual = retornarDataAtual();
-        String mesAnoAtual = retornarMesAnoAtual(dataAtual);
-        String mesAtual = mesAnoAtual.substring(0,2);
-        String anoAtual = mesAnoAtual.substring(3,7);
+        String[] diaMesAnoAtual = retornarVetorDiaMesAnoAtual(dataAtual);
 
         movimentacao.setIdentificadorDataMovimentacao("data_transacao");
-        movimentacao.setDataMovimentacao("20/" + mesAtual + "/" + anoAtual);
+        movimentacao.setDataMovimentacao(diaMesAnoAtual[0] + "/" + diaMesAnoAtual[1] + "/" + diaMesAnoAtual[2]);
         getDriver().findElement(By.id("data_transacao")).sendKeys(movimentacao.getDataMovimentacao());
 
         movimentacao.setIdentificadorDataPagamento("data_pagamento");
-        movimentacao.setDataPagamento("22/" + mesAtual + "/" + anoAtual);
+        movimentacao.setDataPagamento(diaMesAnoAtual[0] + "/" + diaMesAnoAtual[1] + "/" + diaMesAnoAtual[2]);
         getDriver().findElement(By.id("data_pagamento")).sendKeys(movimentacao.getDataPagamento());
 
         movimentacao.setIdentificadorDescricao("descricao");
@@ -417,7 +415,7 @@ public class DSLMovimentacao extends BaseTest {
         getDriver().findElement(By.cssSelector("#status_pendente")).click();
 
         getDriver().findElement(By.xpath("//div//form//button[normalize-space()='Salvar']")).click();
-        msgCadastroSucesso = retornarMensagemTela(getDriver().findElement(By.xpath("//div[@role='alert' and .='Movimentação adicionada com sucesso!']")).getText());
+        msgCadastroSucesso = retornarMensagemTela(getDriver().findElement(By.xpath("//div[@role='alert']")).getText());
 
         Assert.assertEquals("Movimentação adicionada com sucesso!",msgCadastroSucesso);
     }
@@ -428,7 +426,7 @@ public class DSLMovimentacao extends BaseTest {
         if (tabelaVazia.equals("")) {
             executarInserirConta();
         }
-        String msgCadastroSucesso = retornarMensagemTela("");
+        String msgCadastroSucesso;
 
         getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Criar Movimentação']")).click();
 
@@ -483,7 +481,7 @@ public class DSLMovimentacao extends BaseTest {
         if (tabelaVazia.equals("")) {
             executarInserirConta();
         }
-        String msgCadastroSucesso = retornarMensagemTela("");
+        String msgCadastroSucesso;
 
         getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Criar Movimentação']")).click();
 
@@ -494,16 +492,14 @@ public class DSLMovimentacao extends BaseTest {
         movimentacao.setConta(comboSelectTipoMovimentacao.getFirstSelectedOption().getText());
 
         String dataAtual = retornarDataAtual();
-        String mesAnoAtual = retornarMesAnoAtual(dataAtual);
-        String mesAtual = mesAnoAtual.substring(0,2);
-        String anoAtual = mesAnoAtual.substring(3,7);
+        String[] diaMesAnoAtual = retornarVetorDiaMesAnoAtual(dataAtual);
 
         movimentacao.setIdentificadorDataMovimentacao("data_transacao");
-        movimentacao.setDataMovimentacao("20/" + mesAtual + "/" + anoAtual);
+        movimentacao.setDataMovimentacao(diaMesAnoAtual[0] + "/" + diaMesAnoAtual[1] + "/" + diaMesAnoAtual[2]);
         getDriver().findElement(By.id("data_transacao")).sendKeys(movimentacao.getDataMovimentacao());
 
         movimentacao.setIdentificadorDataPagamento("data_pagamento");
-        movimentacao.setDataPagamento("22/" + mesAtual + "/" + anoAtual);
+        movimentacao.setDataPagamento(diaMesAnoAtual[0] + "/" + diaMesAnoAtual[1] + "/" + diaMesAnoAtual[2]);
         getDriver().findElement(By.id("data_pagamento")).sendKeys(movimentacao.getDataPagamento());
 
         movimentacao.setIdentificadorDescricao("descricao");
@@ -527,7 +523,7 @@ public class DSLMovimentacao extends BaseTest {
         getDriver().findElement(By.cssSelector("#status_pendente")).click();
 
         getDriver().findElement(By.xpath("//div//form//button[normalize-space()='Salvar']")).click();
-        msgCadastroSucesso = retornarMensagemTela(getDriver().findElement(By.xpath("//div[@role='alert' and .='Movimentação adicionada com sucesso!']")).getText());
+        msgCadastroSucesso = retornarMensagemTela(getDriver().findElement(By.xpath("//div[@role='alert']")).getText());
 
         Assert.assertEquals("Movimentação adicionada com sucesso!",msgCadastroSucesso);
     }
@@ -538,7 +534,7 @@ public class DSLMovimentacao extends BaseTest {
         if (tabelaVazia.equals("")) {
             executarInserirConta();
         }
-        String msgCadastroSucesso = retornarMensagemTela("");
+        String msgCadastroSucesso;
 
         getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Criar Movimentação']")).click();
 
@@ -549,16 +545,14 @@ public class DSLMovimentacao extends BaseTest {
         movimentacao.setConta(comboSelectTipoMovimentacao.getFirstSelectedOption().getText());
 
         String dataAtual = retornarDataAtual();
-        String mesAnoAtual = retornarMesAnoAtual(dataAtual);
-        String mesAtual = mesAnoAtual.substring(0,2);
-        String anoAtual = mesAnoAtual.substring(3,7);
+        String[] diaMesAnoAtual = retornarVetorDiaMesAnoAtual(dataAtual);
 
         movimentacao.setIdentificadorDataMovimentacao("data_transacao");
-        movimentacao.setDataMovimentacao("20/" + mesAtual + "/" + anoAtual);
+        movimentacao.setDataMovimentacao(diaMesAnoAtual[0] + "/" + diaMesAnoAtual[1] + "/" + diaMesAnoAtual[2]);
         getDriver().findElement(By.id("data_transacao")).sendKeys(movimentacao.getDataMovimentacao());
 
         movimentacao.setIdentificadorDataPagamento("data_pagamento");
-        movimentacao.setDataPagamento("30/" + mesAtual + "/" + anoAtual);
+        movimentacao.setDataPagamento(diaMesAnoAtual[0] + "/" + diaMesAnoAtual[1] + "/" + diaMesAnoAtual[2]);
         getDriver().findElement(By.id("data_pagamento")).sendKeys(movimentacao.getDataPagamento());
 
         movimentacao.setIdentificadorDescricao("descricao");
@@ -582,7 +576,7 @@ public class DSLMovimentacao extends BaseTest {
         getDriver().findElement(By.cssSelector("#status_pago")).click();
 
         getDriver().findElement(By.xpath("//div//form//button[normalize-space()='Salvar']")).click();
-        msgCadastroSucesso = retornarMensagemTela(getDriver().findElement(By.xpath("//div[@role='alert' and .='Movimentação adicionada com sucesso!']")).getText());
+        msgCadastroSucesso = retornarMensagemTela(getDriver().findElement(By.xpath("//div[@role='alert']")).getText());
 
         Assert.assertEquals("Movimentação adicionada com sucesso!",msgCadastroSucesso);
     }
@@ -590,7 +584,7 @@ public class DSLMovimentacao extends BaseTest {
 
     /* ______ ELEMENTOS DE TELA ______ */
     public void validarTelaMovimentacao(Login login) {
-        executarPreCondições(login);
+        executarPreCondicoes(login);
 
         getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Contas']")).click();
         getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Listar']")).click();
@@ -628,8 +622,8 @@ public class DSLMovimentacao extends BaseTest {
         Assert.assertEquals("Valor é obrigatório",getDriver().findElement(By.xpath("//div//ul//li[normalize-space()='Valor é obrigatório']")).getText());
         Assert.assertEquals("Valor deve ser um número",getDriver().findElement(By.xpath("//div//ul//li[normalize-space()='Valor deve ser um número']")).getText());
     }
-    private String retornarDataMovimentacaoMaiorDataAtual(String dataAtual) {
-        dataAtual = retornarDataAtual();
+    private String retornarDataMovimentacaoMaiorDataAtual() {
+        String dataAtual = retornarDataAtual();
         int dia; int mes; int ano;
 
         dia = Integer.parseInt(dataAtual.substring(0,2));
@@ -656,8 +650,7 @@ public class DSLMovimentacao extends BaseTest {
             mesString = "0" + mes;
         }
 
-        String dataFormatada = diaString + "/" + mesString + "/" + ano;
-        return dataFormatada;
+        return diaString + "/" + mesString + "/" + ano;
     }
     /* ______ PROCEDIMENTO REUTILIZADO NESTA PAGE ______ */
 }

@@ -10,7 +10,7 @@ import static core.drivefactory.DriveFactory.getDriver;
 public class DSLCadastroLogin extends DSLBase {
     /* ______ ELEMENTOS DE TEXTO ______ */
     public void inserirEmailSenha(CadastroLogin cadastroLogin) {
-        String msgNome = retornarMensagemTela("");
+        String msgNome;
 
         cadastroLogin.setIdentificadorEmail("email");
         cadastroLogin.setEmail("sxandeogrande@yahoo.com.br");
@@ -26,7 +26,7 @@ public class DSLCadastroLogin extends DSLBase {
         Assert.assertEquals("Nome é um campo obrigatório",msgNome);
     }
     public void inserirNomeSenha(CadastroLogin cadastroLogin) {
-        String msgEmail = retornarMensagemTela("");
+        String msgEmail;
 
         cadastroLogin.setIdentificadorNome("nome");
         cadastroLogin.setNome("Alexandre");
@@ -42,7 +42,7 @@ public class DSLCadastroLogin extends DSLBase {
         Assert.assertEquals("Email é um campo obrigatório",msgEmail);
     }
     public void inserirNomeEmail(CadastroLogin cadastroLogin) {
-        String msgEmail = retornarMensagemTela("");
+        String msgEmail;
 
         cadastroLogin.setIdentificadorNome("nome");
         cadastroLogin.setNome("Alexandre");
@@ -58,9 +58,9 @@ public class DSLCadastroLogin extends DSLBase {
         Assert.assertEquals("Senha é um campo obrigatório",msgEmail);
     }
     public void inserirCamposVazio() {
-        String msgNome = retornarMensagemTela("");
-        String msgEmail = retornarMensagemTela("");
-        String msgSenha = retornarMensagemTela("");
+        String msgNome;
+        String msgEmail;
+        String msgSenha;
 
         getDriver().findElement(By.cssSelector("a[href='/cadastro']")).click();
         getDriver().findElement(By.xpath("//input[@value='Cadastrar']")).click();
@@ -73,7 +73,7 @@ public class DSLCadastroLogin extends DSLBase {
         Assert.assertEquals("Senha é um campo obrigatório",msgSenha);
     }
     public void inserirEmailUtilizado(CadastroLogin cadastroLogin) {
-        String msgEmailUtilizado = retornarMensagemTela("");
+        String msgEmailUtilizado;
 
         cadastroLogin.setIdentificadorNome("nome");
         cadastroLogin.setNome("Alexandre");

@@ -11,7 +11,7 @@ import static core.drivefactory.DriveFactory.getDriver;
 public class DSLLogin extends DSLBase {
     /* ______ ELEMENTOS DE TEXTO ______ */
     public void inserirSenha(Login login) {
-        String msgEmail = retornarMensagemTela("");
+        String msgEmail;
 
         login.setIdentificadorSenha("senha");
         login.setSenha("123456");
@@ -23,7 +23,7 @@ public class DSLLogin extends DSLBase {
         Assert.assertEquals("Email é um campo obrigatório",msgEmail);
     }
     public void inserirEmail(Login login) {
-        String msgSenha = retornarMensagemTela("");
+        String msgSenha;
 
         login.setIdentificadorEmail("email");
         login.setEmail("sxandeogrande@yahoo.com.br");
@@ -35,8 +35,8 @@ public class DSLLogin extends DSLBase {
         Assert.assertEquals("Senha é um campo obrigatório",msgSenha);
     }
     public void inserirCamposVazio() {
-        String msgEmail = retornarMensagemTela("");
-        String msgSenha = retornarMensagemTela("");
+        String msgEmail;
+        String msgSenha;
 
         getDriver().findElement(By.xpath("//button[normalize-space()='Entrar']")).click();
         msgEmail = retornarMensagemTela(getDriver().findElement(By.xpath("//div[normalize-space()='Email é um campo obrigatório']")).getText());
@@ -46,7 +46,7 @@ public class DSLLogin extends DSLBase {
         Assert.assertEquals("Senha é um campo obrigatório",msgSenha);
     }
     public void logarUsuarioInexistente(Login login) {
-        String msgUsuarioInexistente = retornarMensagemTela("");
+        String msgUsuarioInexistente;
 
         login.setIdentificadorEmail("email");
         login.setEmail("usuario000@gmail.com.br");
@@ -61,8 +61,8 @@ public class DSLLogin extends DSLBase {
         Assert.assertEquals("Problemas com o login do usuário",msgUsuarioInexistente);
     }
     public void realizarLoginComSucesso(Login login) {
-        String msgUsuarioLogado = retornarMensagemTela("");
-        String btnSair = retornarNomeBotao("");
+        String msgUsuarioLogado;
+        String btnSair;
 
         login.setIdentificadorEmail("email");
         login.setEmail("usuario1@gmail.com.br");
@@ -88,7 +88,7 @@ public class DSLLogin extends DSLBase {
         String url = getDriver().getCurrentUrl();
         Assert.assertEquals("https://seubarriga.wcaquino.me/login",url);
 
-        String nomeBotao = retornarNomeBotao("");
+        String nomeBotao;
         nomeBotao = getDriver().findElement(By.xpath("//div//form//button[normalize-space()='Entrar']")).getText();
         Assert.assertEquals("Entrar",nomeBotao);
     }

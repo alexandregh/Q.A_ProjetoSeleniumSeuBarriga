@@ -54,12 +54,12 @@ public class BaseTest extends DSLBase {
 
     //____________________________________
 
-    public void executarPreCondições(Login login) {
+    public void executarPreCondicoes(Login login) {
         realizarLogin(login);
     }
     private void realizarLogin(Login login) {
-        String msgUsuarioLogado = "";
-        String btnSair = "";
+        String msgUsuarioLogado;
+        String btnSair;
 
         login.setIdentificadorEmail("email");
         login.setEmail("usuario1@gmail.com.br");

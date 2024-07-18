@@ -7,11 +7,11 @@ import core.dsl.dslmovimentacao.DSLMovimentacao;
 import core.dsl.dslresumomensal.DSLResumoMensal;
 
 public class BasePage {
-    protected DSLLogin dslLogin;
-    protected DSLCadastroLogin dslCadastroLogin;
-    protected DSLConta dslConta;
-    protected DSLMovimentacao dslMovimentacao;
-    protected DSLResumoMensal dslResumoMensal;
+    protected final DSLLogin dslLogin;
+    protected final DSLCadastroLogin dslCadastroLogin;
+    protected final DSLConta dslConta;
+    protected final DSLMovimentacao dslMovimentacao;
+    protected final DSLResumoMensal dslResumoMensal;
     public BasePage() {
         dslLogin = new DSLLogin();
         dslCadastroLogin = new DSLCadastroLogin();
