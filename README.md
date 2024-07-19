@@ -1,6 +1,6 @@
 # ProjetoSeleniumSeuBarriga
 ### Projeto de Automação Web do Sistema Seu Barriga com Selenium WebDriver.
-###### Descrição:
+#### Descrição:
 O exemplo simula a automação de funcionalidades como: 
 - **Login** (Cadastro de Novo Usuário e Login no sistema);
 - **Contas** (Adicionar nova Conta e Listar todas as contas adicionadas no sistema);
