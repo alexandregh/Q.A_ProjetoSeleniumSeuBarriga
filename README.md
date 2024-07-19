@@ -68,6 +68,7 @@ O exemplo que simula a automação do Sistema Seu Barriga com Selenium WebDriver
 - - - - **TestResumoMensal**
 
 #### Observações:
-*Arquivos chamados ProjetoSeleniumSeuBarriga.iml e pom.xml são arquivos de configuração do projeto bem como a pasta target/classes com seus arquivos.*
-*Para cada uma das funcionalidades descritas acima que possuem seus Cenários de Testes cada um com todos os seus respectivos Casos de Testes são criadas pastas com o nome de cada Cenário de Testes e dentro de cada uma das pastas estão localizadas cada um dos **screenshot** de cada Caso de Teste.*
-*Ao todo são criadas 5 pastas de Cenários de Testes que contém **screenshot** de cada Caso de Teste.*
+*Arquivos chamados ProjetoSeleniumSeuBarriga.iml e pom.xml são arquivos de configuração do projeto bem como a pasta target/classes com seus arquivos.*<br>
+*Para cada uma das funcionalidades descritas acima que possuem seus Cenários de Testes cada um com todos os seus respectivos Casos de Testes são criadas pastas com o nome de cada Cenário de Testes e dentro de cada uma das pastas estão localizadas cada um dos **screenshot** de cada Caso de Teste.*<br>
+*Todos os 4 principais drivers para executar o projeto estão dentro da pasta **drivers**; estes por sua vez estão dentro da pasta chamada **Resources**.*<br>
+*Ao todo são criadas 5 pastas de Cenários de Testes que contém **screenshot** de cada Caso de Teste. As pastas com arquivos de **screenshot** bem como as pastas para cada um dos drivers estão dentro da pasta chamada **Resources**.*
