@@ -12,13 +12,24 @@ import static core.assistant.Assistant.*;
 import static core.drivefactory.DriveFactory.getDriver;
 
 public class DSLResumoMensal extends BaseTest {
-    /* ______ ELEMENTOS DE TEXTO ______ */
-    public void verificarExisteSituacaoPendenteResumoMensalPorDataAtual(ResumoMensal resumoMensal) {
-        getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Resumo Mensal']")).click();
-        definirMesAno(resumoMensal);
-        getDriver().findElement(By.xpath("//form//input[@value='Buscar']")).click();
+    /* ______ TELA RESUMO MENSAL ______ */
+    public void validarTelaResumoMensal(Login login) {
+        executarPreCondicoes(login);
 
-        String corpoTabela = "//table[@id='tabelaExtrato']//tbody";
+        getDriver().findElement(By.xpath(retornarCliqueMenuResumoMensal())).click();
+
+        String url = getDriver().getCurrentUrl();
+        Assert.assertEquals("https://seubarriga.wcaquino.me/extrato",url);
+
+        String nomeBotao = getDriver().findElement(By.xpath(retornarCliqueBotaoBuscar())).getAttribute("value");
+        Assert.assertEquals("Buscar",nomeBotao);
+    }
+    public void verificarExisteSituacaoPendenteResumoMensalPorDataAtual(ResumoMensal resumoMensal) {
+        getDriver().findElement(By.xpath(retornarCliqueMenuResumoMensal())).click();
+        definirMesAno(resumoMensal);
+        getDriver().findElement(By.xpath(retornarCliqueBotaoBuscar())).click();
+
+        String corpoTabela = retornarCorpoTabelaExtrato();
         String tabelaVazia = getDriver().findElement(By.xpath(corpoTabela)).getText();
         if (!tabelaVazia.equals("")) {
             String[] registros = tabelaVazia.split("\n");
@@ -26,7 +37,7 @@ public class DSLResumoMensal extends BaseTest {
             int i = 1;
             do {
                 String situacao;
-                String registroResumoMensal = corpoTabela + "//tr[" + i + "]" + "//td[5]//span";
+                String registroResumoMensal = corpoTabela + "//tr[" + i + "]" + retornarColunaSituacao();
                 situacao = getDriver().findElement(By.xpath(registroResumoMensal)).getText();
                 if (situacao.equals("Pendente")) {
                     Assert.assertEquals("Pendente",situacao);
@@ -37,11 +48,11 @@ public class DSLResumoMensal extends BaseTest {
         }
     }
     public void verificarExisteSituacaoPagoResumoMensalPorDataAtual(ResumoMensal resumoMensal) {
-        getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Resumo Mensal']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuResumoMensal())).click();
         definirMesAno(resumoMensal);
-        getDriver().findElement(By.xpath("//form//input[@value='Buscar']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueBotaoBuscar())).click();
 
-        String corpoTabela = "//table[@id='tabelaExtrato']//tbody";
+        String corpoTabela = retornarCorpoTabelaExtrato();
         String tabelaVazia = getDriver().findElement(By.xpath(corpoTabela)).getText();
         if (!tabelaVazia.equals("")) {
             String[] registros = tabelaVazia.split("\n");
@@ -49,7 +60,7 @@ public class DSLResumoMensal extends BaseTest {
             int i = 1;
             do {
                 String situacao;
-                String registroResumoMensal = corpoTabela + "//tr[" + i + "]" + "//td[5]//span";
+                String registroResumoMensal = corpoTabela + "//tr[" + i + "]" + retornarColunaSituacao();
                 situacao = getDriver().findElement(By.xpath(registroResumoMensal)).getText();
                 if (situacao.equals("Pago")) {
                     Assert.assertEquals("Pago",situacao);
@@ -60,11 +71,11 @@ public class DSLResumoMensal extends BaseTest {
         }
     }
     public void verificarQuantidadeSituacaoPendenteResumoMensalPorDataAtual(ResumoMensal resumoMensal) {
-        getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Resumo Mensal']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuResumoMensal())).click();
         definirMesAno(resumoMensal);
-        getDriver().findElement(By.xpath("//form//input[@value='Buscar']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueBotaoBuscar())).click();
 
-        String corpoTabela = "//table[@id='tabelaExtrato']//tbody";
+        String corpoTabela = retornarCorpoTabelaExtrato();
         String tabelaVazia = getDriver().findElement(By.xpath(corpoTabela)).getText();
         if (!tabelaVazia.equals("")) {
             String[] registros = tabelaVazia.split("\n");
@@ -73,7 +84,7 @@ public class DSLResumoMensal extends BaseTest {
             int i = 1;
             do {
                 String situacao;
-                String registroResumoMensal = corpoTabela + "//tr[" + i + "]" + "//td[5]//span";
+                String registroResumoMensal = corpoTabela + "//tr[" + i + "]" + retornarColunaSituacao();
                 situacao = getDriver().findElement(By.xpath(registroResumoMensal)).getText();
                 if (situacao.equals("Pendente")) {
                     Assert.assertEquals("Pendente",situacao);
@@ -85,11 +96,11 @@ public class DSLResumoMensal extends BaseTest {
         }
     }
     public void verificarQuantidadeSituacaoPagoResumoMensalPorDataAtual(ResumoMensal resumoMensal) {
-        getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Resumo Mensal']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuResumoMensal())).click();
         definirMesAno(resumoMensal);
-        getDriver().findElement(By.xpath("//form//input[@value='Buscar']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueBotaoBuscar())).click();
 
-        String corpoTabela = "//table[@id='tabelaExtrato']//tbody";
+        String corpoTabela = retornarCorpoTabelaExtrato();
         String tabelaVazia = getDriver().findElement(By.xpath(corpoTabela)).getText();
         if (!tabelaVazia.equals("")) {
             String[] registros = tabelaVazia.split("\n");
@@ -98,7 +109,7 @@ public class DSLResumoMensal extends BaseTest {
             int i = 1;
             do {
                 String situacao;
-                String registroResumoMensal = corpoTabela + "//tr[" + i + "]" + "//td[5]//span";
+                String registroResumoMensal = corpoTabela + "//tr[" + i + "]" + retornarColunaSituacao();
                 situacao = getDriver().findElement(By.xpath(registroResumoMensal)).getText();
                 if (situacao.equals("Pago")) {
                     Assert.assertEquals("Pago",situacao);
@@ -110,11 +121,11 @@ public class DSLResumoMensal extends BaseTest {
         }
     }
     public void verificarMaiorValorResumoMensalPorDataAtual(ResumoMensal resumoMensal) {
-        getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Resumo Mensal']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuResumoMensal())).click();
         definirMesAno(resumoMensal);
-        getDriver().findElement(By.xpath("//form//input[@value='Buscar']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueBotaoBuscar())).click();
 
-        String corpoTabela = "//table[@id='tabelaExtrato']//tbody";
+        String corpoTabela = retornarCorpoTabelaExtrato();
         String tabelaVazia = getDriver().findElement(By.xpath(corpoTabela)).getText();
         if (!tabelaVazia.equals("")) {
             String[] registros = tabelaVazia.split("\n");
@@ -143,11 +154,11 @@ public class DSLResumoMensal extends BaseTest {
         }
     }
     public void verificarMenorValorResumoMensalPorDataAtual(ResumoMensal resumoMensal) {
-        getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Resumo Mensal']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuResumoMensal())).click();
         definirMesAno(resumoMensal);
-        getDriver().findElement(By.xpath("//form//input[@value='Buscar']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueBotaoBuscar())).click();
 
-        String corpoTabela = "//table[@id='tabelaExtrato']//tbody";
+        String corpoTabela = retornarCorpoTabelaExtrato();
         String tabelaVazia = getDriver().findElement(By.xpath(corpoTabela)).getText();
         if (!tabelaVazia.equals("")) {
             String[] registros = tabelaVazia.split("\n");
@@ -156,11 +167,11 @@ public class DSLResumoMensal extends BaseTest {
             String valorMenor;
 
             int i = 1;
-            String registroResumoMensal = corpoTabela + "//tr[" + i + "]" + "//td[4]";
+            String registroResumoMensal = corpoTabela + "//tr[" + i + "]" + retornarColunaValor();
             valorInicial = getDriver().findElement(By.xpath(registroResumoMensal)).getText();
             valorMenor = getDriver().findElement(By.xpath(registroResumoMensal)).getText();
             do {
-                registroResumoMensal = corpoTabela + "//tr[" + i + "]" + "//td[4]";
+                registroResumoMensal = corpoTabela + "//tr[" + i + "]" + retornarColunaValor();
                 if (i > 1) {
                     if (Double.parseDouble(valorInicial) < Double.parseDouble(getDriver().findElement(By.xpath(registroResumoMensal)).getText())) {
                         if (Double.parseDouble(getDriver().findElement(By.xpath(registroResumoMensal)).getText()) < Double.parseDouble(valorMenor)) {
@@ -176,11 +187,11 @@ public class DSLResumoMensal extends BaseTest {
         }
     }
     public void verificarExisteValorZeroResumoMensalPorDataAtual(ResumoMensal resumoMensal) {
-        getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Resumo Mensal']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuResumoMensal())).click();
         definirMesAno(resumoMensal);
-        getDriver().findElement(By.xpath("//form//input[@value='Buscar']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueBotaoBuscar())).click();
 
-        String corpoTabela = "//table[@id='tabelaExtrato']//tbody";
+        String corpoTabela = retornarCorpoTabelaExtrato();
         String tabelaVazia = getDriver().findElement(By.xpath(corpoTabela)).getText();
         if (!tabelaVazia.equals("")) {
             String[] registros = tabelaVazia.split("\n");
@@ -188,7 +199,7 @@ public class DSLResumoMensal extends BaseTest {
             String zero = retornarValorElemento("");
             int i = 1;
             do {
-                String registroResumoMensal = corpoTabela + "//tr[" + i + "]" + "//td[4]";
+                String registroResumoMensal = corpoTabela + "//tr[" + i + "]" + retornarColunaValor();
                 if (getDriver().findElement(By.xpath(registroResumoMensal)).getText().equals("0.00")) {
                     zero = getDriver().findElement(By.xpath(registroResumoMensal)).getText();
                 }
@@ -202,11 +213,11 @@ public class DSLResumoMensal extends BaseTest {
         }
     }
     public void verificarExisteContaPadraoResumoMensalPorDataAtual(ResumoMensal resumoMensal) {
-        getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Resumo Mensal']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuResumoMensal())).click();
         definirMesAno(resumoMensal);
-        getDriver().findElement(By.xpath("//form//input[@value='Buscar']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueBotaoBuscar())).click();
 
-        String corpoTabela = "//table[@id='tabelaExtrato']//tbody";
+        String corpoTabela = retornarCorpoTabelaExtrato();
         String tabelaVazia = getDriver().findElement(By.xpath(corpoTabela)).getText();
         if (!tabelaVazia.equals("")) {
             String[] registros = tabelaVazia.split("\n");
@@ -225,11 +236,11 @@ public class DSLResumoMensal extends BaseTest {
         }
     }
     public void verificarExisteContaDiferentePadraoResumoMensalPorDataAtual(ResumoMensal resumoMensal) {
-        getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Resumo Mensal']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuResumoMensal())).click();
         definirMesAno(resumoMensal);
-        getDriver().findElement(By.xpath("//form//input[@value='Buscar']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueBotaoBuscar())).click();
 
-        String corpoTabela = "//table[@id='tabelaExtrato']//tbody";
+        String corpoTabela = retornarCorpoTabelaExtrato();
         String tabelaVazia = getDriver().findElement(By.xpath(corpoTabela)).getText();
         if (!tabelaVazia.equals("")) {
             String[] registros = tabelaVazia.split("\n");
@@ -237,7 +248,7 @@ public class DSLResumoMensal extends BaseTest {
             String contaPadrao = retornarValorElemento("");
             int i = 1;
             do {
-                String registroResumoMensal = corpoTabela + "//tr[" + i + "]" + "//td[3]";
+                String registroResumoMensal = corpoTabela + "//tr[" + i + "]" + retornarColunaConta();
                 if (!getDriver().findElement(By.xpath(registroResumoMensal)).getText().equals("Conta1_Usuário1")) {
                     contaPadrao = getDriver().findElement(By.xpath(registroResumoMensal)).getText();
                 }
@@ -251,11 +262,11 @@ public class DSLResumoMensal extends BaseTest {
         }
     }
     public void verificarMenorValorDataPagamentoResumoMensalPorDataAtual(ResumoMensal resumoMensal) {
-        getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Resumo Mensal']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuResumoMensal())).click();
         definirMesAno(resumoMensal);
-        getDriver().findElement(By.xpath("//form//input[@value='Buscar']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueBotaoBuscar())).click();
 
-        String corpoTabela = "//table[@id='tabelaExtrato']//tbody";
+        String corpoTabela = retornarCorpoTabelaExtrato();
         String tabelaVazia = getDriver().findElement(By.xpath(corpoTabela)).getText();
         if (!tabelaVazia.equals("")) {
             String[] registros = tabelaVazia.split("\n");
@@ -263,11 +274,11 @@ public class DSLResumoMensal extends BaseTest {
             String valorDiaInicial;
             String valorDiaMenor;
             int i = 1;
-            String registroResumoMensal = corpoTabela + "//tr[" + i + "]" + "//td[2]";
+            String registroResumoMensal = corpoTabela + "//tr[" + i + "]" + retornarColunaDtPagamento();
             valorDiaInicial = retornarVetorDiaMesAnoAtual(getDriver().findElement(By.xpath(registroResumoMensal)).getText())[0];
             valorDiaMenor = retornarVetorDiaMesAnoAtual(getDriver().findElement(By.xpath(registroResumoMensal)).getText())[0];
             do {
-                registroResumoMensal = corpoTabela + "//tr[" + i + "]" + "//td[2]";
+                registroResumoMensal = corpoTabela + "//tr[" + i + "]" + retornarColunaDtPagamento();
                 if (i > 1) {
                     if (Integer.parseInt(valorDiaInicial) < Integer.parseInt(retornarVetorDiaMesAnoAtual(getDriver().findElement(By.xpath(registroResumoMensal)).getText())[0])) {
                         if (Integer.parseInt(retornarVetorDiaMesAnoAtual(getDriver().findElement(By.xpath(registroResumoMensal)).getText())[0]) < Integer.parseInt(valorDiaMenor)) {
@@ -283,11 +294,11 @@ public class DSLResumoMensal extends BaseTest {
         }
     }
     public void verificarMaiorValorDataPagamentoResumoMensalPorDataAtual(ResumoMensal resumoMensal) {
-        getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Resumo Mensal']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuResumoMensal())).click();
         definirMesAno(resumoMensal);
-        getDriver().findElement(By.xpath("//form//input[@value='Buscar']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueBotaoBuscar())).click();
 
-        String corpoTabela = "//table[@id='tabelaExtrato']//tbody";
+        String corpoTabela = retornarCorpoTabelaExtrato();
         String tabelaVazia = getDriver().findElement(By.xpath(corpoTabela)).getText();
         if (!tabelaVazia.equals("")) {
             String[] registros = tabelaVazia.split("\n");
@@ -296,11 +307,11 @@ public class DSLResumoMensal extends BaseTest {
             String valorDiaMenor;
 
             int i = 1;
-            String registroResumoMensal = corpoTabela + "//tr[" + i + "]" + "//td[2]";
+            String registroResumoMensal = corpoTabela + "//tr[" + i + "]" + retornarColunaDtPagamento();
             valorDiaInicial = retornarVetorDiaMesAnoAtual(getDriver().findElement(By.xpath(registroResumoMensal)).getText())[0];
             valorDiaMenor = retornarVetorDiaMesAnoAtual(getDriver().findElement(By.xpath(registroResumoMensal)).getText())[0];
             do {
-                registroResumoMensal = corpoTabela + "//tr[" + i + "]" + "//td[2]";
+                registroResumoMensal = corpoTabela + "//tr[" + i + "]" + retornarColunaDtPagamento();
                 if (i > 1) {
                     if (Integer.parseInt(valorDiaInicial) > Integer.parseInt(retornarVetorDiaMesAnoAtual(getDriver().findElement(By.xpath(registroResumoMensal)).getText())[0])) {
                         if (Integer.parseInt(retornarVetorDiaMesAnoAtual(getDriver().findElement(By.xpath(registroResumoMensal)).getText())[0]) > Integer.parseInt(valorDiaMenor)) {
@@ -316,11 +327,11 @@ public class DSLResumoMensal extends BaseTest {
         }
     }
     public void verificarContaResumoMensalPorDataAtual(ResumoMensal resumoMensal) {
-        getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Resumo Mensal']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuResumoMensal())).click();
         definirMesAno(resumoMensal);
-        getDriver().findElement(By.xpath("//form//input[@value='Buscar']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueBotaoBuscar())).click();
 
-        String corpoTabela = "//table[@id='tabelaExtrato']//tbody";
+        String corpoTabela = retornarCorpoTabelaExtrato();
         String tabelaVazia = getDriver().findElement(By.xpath(corpoTabela)).getText();
         String conta;
         if (!tabelaVazia.equals("")) {
@@ -329,7 +340,7 @@ public class DSLResumoMensal extends BaseTest {
             int i = 1;
             String registroResumoMensal;
             do {
-                registroResumoMensal = corpoTabela + "//tr[" + i + "]" + "//td[3]";
+                registroResumoMensal = corpoTabela + "//tr[" + i + "]" + retornarColunaConta();
                 conta = getDriver().findElement(By.xpath(registroResumoMensal)).getText();
                 if (i > 1) {
                     if (!conta.equals("Conta1_Usuário1")) {
@@ -339,24 +350,24 @@ public class DSLResumoMensal extends BaseTest {
                 i++;
             } while (i <= qtdRegistrosResumoMensal);
         }
-        getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Home']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuHome())).click();
 
         String msgFooter = getDriver().findElement(By.xpath("//footer/span")).getText();
         Assert.assertEquals("Seu Barriga. Nunca mais esqueça de pagar o aluguel.reset",msgFooter);
 
-        String valorColunaConta = "";
-        tabelaVazia = getDriver().findElement(By.xpath("//table[@id='tabelaSaldo']//tbody")).getText();
+        String valorColunaConta = retornarValorElemento("");
+        tabelaVazia = getDriver().findElement(By.xpath(retornarCorpoTabelaSaldo())).getText();
         if (!tabelaVazia.equals("")) {
-            valorColunaConta = getDriver().findElement(By.xpath("//table[@id='tabelaSaldo']//tbody//tr//td[normalize-space()='Conta1_Usuário1']")).getText();
+            valorColunaConta = getDriver().findElement(By.xpath(retornarCorpoTabelaSaldo() + "//tr//td[normalize-space()='Conta1_Usuário1']")).getText();
         }
         Assert.assertEquals("Conta1_Usuário1", valorColunaConta);
     }
     public void verificarSaldoResumoMensalPorDataAtual(ResumoMensal resumoMensal) {
-        getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Resumo Mensal']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuResumoMensal())).click();
         definirMesAno(resumoMensal);
-        getDriver().findElement(By.xpath("//form//input[@value='Buscar']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueBotaoBuscar())).click();
 
-        String corpoTabela = "//table[@id='tabelaExtrato']//tbody";
+        String corpoTabela = retornarCorpoTabelaExtrato();
         String tabelaVazia = getDriver().findElement(By.xpath(corpoTabela)).getText();
         double saldo = 0.00;
         if (!tabelaVazia.equals("")) {
@@ -367,29 +378,29 @@ public class DSLResumoMensal extends BaseTest {
             int i = 1;
             String registroResumoMensal;
             do {
-                registroResumoMensal = corpoTabela + "//tr[" + i + "]" + "//td[4]";
+                registroResumoMensal = corpoTabela + "//tr[" + i + "]" + retornarColunaValor();
                 valor = Double.parseDouble(getDriver().findElement(By.xpath(registroResumoMensal)).getText());
                 saldo += valor;
                 i++;
             } while (i <= qtdRegistrosResumoMensal);
         }
-        getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Home']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuHome())).click();
 
         String msgFooter = getDriver().findElement(By.xpath("//footer/span")).getText();
         Assert.assertEquals("Seu Barriga. Nunca mais esqueça de pagar o aluguel.reset",msgFooter);
 
-        tabelaVazia = getDriver().findElement(By.xpath("//table[@id='tabelaSaldo']//tbody")).getText();
+        tabelaVazia = getDriver().findElement(By.xpath(retornarCorpoTabelaSaldo())).getText();
         if (!tabelaVazia.equals("")) {
-            String valorColunaSaldo = getDriver().findElement(By.xpath("//table[@id='tabelaSaldo']//tbody//tr//td[normalize-space()='-92.80']")).getText();
+            String valorColunaSaldo = getDriver().findElement(By.xpath(retornarCorpoTabelaSaldo() + "//tr//td[normalize-space()='-92.80']")).getText();
         }
         Assert.assertEquals("-92.80", String.format("%.2f", saldo).replace(",","."));
     }
     public void removerMovimentacoesContaResumoMensalPorDataAtual(ResumoMensal resumoMensal) throws InterruptedException {
-        getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Resumo Mensal']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuResumoMensal())).click();
         definirMesAno(resumoMensal);
-        getDriver().findElement(By.xpath("//form//input[@value='Buscar']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueBotaoBuscar())).click();
 
-        String corpoTabela = "//table[@id='tabelaExtrato']//tbody";
+        String corpoTabela = retornarCorpoTabelaExtrato();
         String tabelaVazia = getDriver().findElement(By.xpath(corpoTabela)).getText();
         if (!tabelaVazia.equals("")) {
             String[] registros = tabelaVazia.split("\n");
@@ -400,7 +411,7 @@ public class DSLResumoMensal extends BaseTest {
             do {
                 registroResumoMensal = corpoTabela + "//tr[1]" + "//td[6]//a//span";
                 getDriver().findElement(By.xpath(registroResumoMensal)).click();
-                String msgMovimentacaoRemovida = getDriver().findElement(By.xpath("//div[@role='alert']")).getText();
+                String msgMovimentacaoRemovida = getDriver().findElement(By.xpath(retornarMensagemGenerica())).getText();
                 Assert.assertEquals("Movimentação removida com sucesso!",msgMovimentacaoRemovida);
                 i++;
                 Thread.sleep(1000);
@@ -408,14 +419,14 @@ public class DSLResumoMensal extends BaseTest {
         }
     }
     public void removerContaAposRemocaoMovimentacoesResumoMensalPorDataAtual() throws InterruptedException {
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Contas']")).click();
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Listar']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuContas())).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuListar())).click();
 
         String url = getDriver().getCurrentUrl();
         Assert.assertEquals("https://seubarriga.wcaquino.me/contas",url);
 
-        String corpoTabela = "//table[@id='tabelaContas']//tbody";
-        String tabelaVazia = retornarNomeObjeto(getDriver().findElement(By.xpath("//table[@id='tabelaContas']//tbody")).getText());
+        String corpoTabela = retornarCorpoTabelaContas();
+        String tabelaVazia = retornarNomeObjeto(getDriver().findElement(By.xpath(retornarCorpoTabelaContas())).getText());
         if (!tabelaVazia.equals("")) {
             String[] registros = tabelaVazia.split("\n");
             int qtdContas = registros.length;
@@ -425,7 +436,7 @@ public class DSLResumoMensal extends BaseTest {
             do {
                 registroContas = corpoTabela + "//tr[1]//a[2]//span";
                 getDriver().findElement(By.xpath(registroContas)).click();
-                String msgContaRemovida = getDriver().findElement(By.xpath("//div[@role='alert']")).getText();
+                String msgContaRemovida = getDriver().findElement(By.xpath(retornarMensagemGenerica())).getText();
                 Assert.assertEquals("Conta removida com sucesso!",msgContaRemovida);
                 i++;
                 Thread.sleep(1000);
@@ -438,32 +449,85 @@ public class DSLResumoMensal extends BaseTest {
         String url = getDriver().getCurrentUrl();
         Assert.assertEquals("https://seubarriga.wcaquino.me/logout",url);
 
-        String nomeBotao = getDriver().findElement(By.xpath("//div//form//button[normalize-space()='Entrar']")).getText();
+        String nomeBotao = getDriver().findElement(By.xpath(retornarNomeBotaoEntrar())).getText();
         Assert.assertEquals("Entrar",nomeBotao);
     }
-    /* ______ ELEMENTOS DE TEXTO ______ */
+    /* ______ TELA RESUMO MENSAL ______ */
 
-    /* ______ ELEMENTOS DE TELA ______ */
-    public void validarTelaResumoMensal(Login login) {
-        executarPreCondicoes(login);
-
-        getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Resumo Mensal']")).click();
-
-        String url = getDriver().getCurrentUrl();
-        Assert.assertEquals("https://seubarriga.wcaquino.me/extrato",url);
-
-        String nomeBotao;
-        nomeBotao = getDriver().findElement(By.xpath("//div//form//input[@value='Buscar']")).getAttribute("value");
-        Assert.assertEquals("Buscar",nomeBotao);
+    /* ______ ELEMENTOS DE MENU ______ */
+    private String retornarCliqueMenuHome() {
+        String menuHome = "//div[@id='navbar']//ul//li//a[normalize-space()='Home']";
+        return menuHome;
     }
-    /* ______ ELEMENTOS DE TELA ______ */
+    private String retornarCliqueMenuResumoMensal() {
+        String menuResumoMensal = "//div[@id='navbar']//ul//li//a[normalize-space()='Resumo Mensal']";
+        return menuResumoMensal;
+    }
+    private String retornarCliqueMenuContas() {
+        String menuContas = "//div[@id='navbar']//a[normalize-space()='Contas']";
+        return menuContas;
+    }
+    private String retornarCliqueMenuListar() {
+        String menuListar = "//div[@id='navbar']//a[normalize-space()='Listar']";
+        return menuListar;
+    }
+    /* ______ ELEMENTOS DE MENU ______ */
+
+    /* ______ ELEMENTOS DE BOTÃO ______ */
+    private String retornarCliqueBotaoBuscar() {
+        String btnBuscar = "//form//input[@value='Buscar']";
+        return btnBuscar;
+    }
+    private String retornarNomeBotaoEntrar() {
+        String nomeBotaoEntrar = "//div//form//button[normalize-space()='Entrar']";
+        return nomeBotaoEntrar;
+    }
+    /* ______ ELEMENTOS DE BOTÃO ______ */
+
+    /* ______ ELEMENTOS DE TABELA ______ */
+    private String retornarCorpoTabelaContas() {
+        String corpoTabelaContas = "//table[@id='tabelaContas']//tbody";
+        return corpoTabelaContas;
+    }
+    private String retornarCorpoTabelaSaldo() {
+        String corpoTabelaSaldo = "//table[@id='tabelaSaldo']//tbody";
+        return corpoTabelaSaldo;
+    }
+    private String retornarCorpoTabelaExtrato() {
+        String corpoTabelaExtrato = "//table[@id='tabelaExtrato']//tbody";
+        return corpoTabelaExtrato;
+    }
+    private String retornarColunaSituacao() {
+        String colunaSituacao = "//td[5]//span";
+        return colunaSituacao;
+    }
+    private String retornarColunaValor() {
+        String colunaValor = "//td[4]";
+        return colunaValor;
+    }
+    private String retornarColunaConta() {
+        String colunaValor = "//td[3]";
+        return colunaValor;
+    }
+    private String retornarColunaDtPagamento() {
+        String colunaValor = "//td[2]";
+        return colunaValor;
+    }
+    /* ______ ELEMENTOS DE TABELA ______ */
+
+    /* ______ ELEMENTOS DE MENSAGEM ______ */
+    private String retornarMensagemGenerica() {
+        String msg = "//div[@role='alert']";
+        return msg;
+    }
+    /* ______ ELEMENTOS DE MENSAGEM ______ */
 
     /* ______ PROCEDIMENTO REUTILIZADO NESTA PAGE ______ */
     private void definirMesAno(ResumoMensal resumoMensal) {
         String dataAtual = retornarDataAtual();
-        String mesAnoAnoAtual = retornarMesAnoAtual(dataAtual);
-        String mesAtual = mesAnoAnoAtual.substring(0,2);
-        String anoAtual = mesAnoAnoAtual.substring(3,7);
+        String mesAnoAtual = retornarMesAnoAtual(dataAtual);
+        String mesAtual = mesAnoAtual.substring(0,2);
+        String anoAtual = mesAnoAtual.substring(3,7);
 
         //mês
         resumoMensal.setIdentificadorMes("mes");
