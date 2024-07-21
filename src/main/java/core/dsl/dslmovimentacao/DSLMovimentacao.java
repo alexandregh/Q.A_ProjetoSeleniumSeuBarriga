@@ -181,7 +181,6 @@ public class DSLMovimentacao extends BaseTest {
             executarInserirConta();
         }
         String msgDataMovimentacao;
-        String dataAtual = retornarDataAtual();
         String dataMovimentacaoMaiorDataAtual = retornarDataMovimentacaoMaiorDataAtual();
 
         getDriver().findElement(By.xpath(retornarCliqueMenuCriarMovimentacoes())).click();
@@ -603,41 +602,34 @@ public class DSLMovimentacao extends BaseTest {
 
     /* ______ ELEMENTOS DE MENU ______ */
     private String retornarCliqueMenuContas() {
-        String menuContas = "//div[@id='navbar']//a[normalize-space()='Contas']";
-        return menuContas;
+        return "//div[@id='navbar']//a[normalize-space()='Contas']";
     }
     private String retornarCliqueMenuListar() {
-        String menuListar = "//div[@id='navbar']//a[normalize-space()='Listar']";
-        return menuListar;
+        return "//div[@id='navbar']//a[normalize-space()='Listar']";
     }
     private String retornarCliqueMenuCriarMovimentacoes() {
-        String menuCriarMovimentacoes = "//div[@id='navbar']//ul//li//a[normalize-space()='Criar Movimentação']";
-        return menuCriarMovimentacoes;
+        return "//div[@id='navbar']//ul//li//a[normalize-space()='Criar Movimentação']";
     }
     /* ______ ELEMENTOS DE MENU ______ */
 
     /* ______ ELEMENTOS DE BOTÃO ______ */
     private String retornarCliqueBotaoSalvar() {
-        String btnSalvar = "//div//form//button[normalize-space()='Salvar']";
-        return  btnSalvar;
+        return "//div//form//button[normalize-space()='Salvar']";
     }
     /* ______ ELEMENTOS DE BOTÃO ______ */
 
     /* ______ ELEMENTOS DE TABELA ______ */
     private String retornarCorpoTabelaContas() {
-        String corpoTabelaContas = "//table[@id='tabelaContas']//tbody";
-        return corpoTabelaContas;
+        return "//table[@id='tabelaContas']//tbody";
     }
     /* ______ ELEMENTOS DE TABELA ______ */
 
     /* ______ ELEMENTOS DE MENSAGEM ______ */
     private String retornarMensagemGenerica() {
-        String msg = "//div[@role='alert']";
-        return msg;
+        return "//div[@role='alert']";
     }
     private String retornarMensagemDataPagamentoInvalida() {
-        String msg = "//div//ul//li[normalize-space()='Data do pagamento inválida (DD/MM/YYYY)']";
-        return msg;
+        return "//div//ul//li[normalize-space()='Data do pagamento inválida (DD/MM/YYYY)']";
     }
     /* ______ ELEMENTOS DE MENSAGEM ______ */
 

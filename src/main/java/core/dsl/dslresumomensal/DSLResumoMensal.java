@@ -456,69 +456,55 @@ public class DSLResumoMensal extends BaseTest {
 
     /* ______ ELEMENTOS DE MENU ______ */
     private String retornarCliqueMenuHome() {
-        String menuHome = "//div[@id='navbar']//ul//li//a[normalize-space()='Home']";
-        return menuHome;
+        return "//div[@id='navbar']//ul//li//a[normalize-space()='Home']";
     }
     private String retornarCliqueMenuResumoMensal() {
-        String menuResumoMensal = "//div[@id='navbar']//ul//li//a[normalize-space()='Resumo Mensal']";
-        return menuResumoMensal;
+        return "//div[@id='navbar']//ul//li//a[normalize-space()='Resumo Mensal']";
     }
     private String retornarCliqueMenuContas() {
-        String menuContas = "//div[@id='navbar']//a[normalize-space()='Contas']";
-        return menuContas;
+        return "//div[@id='navbar']//a[normalize-space()='Contas']";
     }
     private String retornarCliqueMenuListar() {
-        String menuListar = "//div[@id='navbar']//a[normalize-space()='Listar']";
-        return menuListar;
+        return "//div[@id='navbar']//a[normalize-space()='Listar']";
     }
     /* ______ ELEMENTOS DE MENU ______ */
 
     /* ______ ELEMENTOS DE BOTÃO ______ */
     private String retornarCliqueBotaoBuscar() {
-        String btnBuscar = "//form//input[@value='Buscar']";
-        return btnBuscar;
+        return "//form//input[@value='Buscar']";
     }
     private String retornarNomeBotaoEntrar() {
-        String nomeBotaoEntrar = "//div//form//button[normalize-space()='Entrar']";
-        return nomeBotaoEntrar;
+        return "//div//form//button[normalize-space()='Entrar']";
     }
     /* ______ ELEMENTOS DE BOTÃO ______ */
 
     /* ______ ELEMENTOS DE TABELA ______ */
     private String retornarCorpoTabelaContas() {
-        String corpoTabelaContas = "//table[@id='tabelaContas']//tbody";
-        return corpoTabelaContas;
+        return "//table[@id='tabelaContas']//tbody";
     }
     private String retornarCorpoTabelaSaldo() {
-        String corpoTabelaSaldo = "//table[@id='tabelaSaldo']//tbody";
-        return corpoTabelaSaldo;
+        return "//table[@id='tabelaSaldo']//tbody";
     }
     private String retornarCorpoTabelaExtrato() {
-        String corpoTabelaExtrato = "//table[@id='tabelaExtrato']//tbody";
-        return corpoTabelaExtrato;
+        return "//table[@id='tabelaExtrato']//tbody";
     }
     private String retornarColunaSituacao() {
-        String colunaSituacao = "//td[5]//span";
-        return colunaSituacao;
+        return "//td[5]//span";
     }
     private String retornarColunaValor() {
-        String colunaValor = "//td[4]";
-        return colunaValor;
+        return "//td[4]";
     }
     private String retornarColunaConta() {
-        String colunaValor = "//td[3]";
-        return colunaValor;
+        return "//td[3]";
     }
     private String retornarColunaDtPagamento() {
-        String colunaValor = "//td[2]";
-        return colunaValor;
+        return "//td[2]";
     }
     /* ______ ELEMENTOS DE TABELA ______ */
 
     /* ______ ELEMENTOS DE MENSAGEM ______ */
     private String retornarMensagemGenerica() {
-        String msg = "//div[@role='alert']";
-        return msg;
+        return "//div[@role='alert']";
     }
     /* ______ ELEMENTOS DE MENSAGEM ______ */
 
