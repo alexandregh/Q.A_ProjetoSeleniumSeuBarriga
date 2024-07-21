@@ -12,32 +12,51 @@ import static core.assistant.Assistant.*;
 import static core.drivefactory.DriveFactory.getDriver;
 
 public class DSLMovimentacao extends BaseTest {
-    /* ______ ELEMENTOS DE TEXTO ______ */
-    public void validarTodosCamposVazios() {
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Contas']")).click();
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Listar']")).click();
-        String tabelaVazia = getDriver().findElement(By.xpath("//table[@id='tabelaContas']//tbody")).getText();
+    /* ______ TELA MOVIMENTAÇÃO ______ */
+    public void validarTelaMovimentacao(Login login) {
+        executarPreCondicoes(login);
+
+        getDriver().findElement(By.xpath(retornarCliqueMenuContas())).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuListar())).click();
+        String tabelaVazia = getDriver().findElement(By.xpath(retornarCorpoTabelaContas())).getText();
         if (tabelaVazia.equals("")) {
             executarInserirConta();
-            getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Criar Movimentação']")).click();
-            getDriver().findElement(By.xpath("//div//form//button[normalize-space()='Salvar']")).click();
+
+            getDriver().findElement(By.xpath(retornarCliqueMenuCriarMovimentacoes())).click();
+
+            String url = getDriver().getCurrentUrl();
+            Assert.assertEquals("https://seubarriga.wcaquino.me/movimentacao",url);
+
+            String nomeBotao;
+            nomeBotao = getDriver().findElement(By.xpath(retornarCliqueBotaoSalvar())).getText();
+            Assert.assertEquals("Salvar",nomeBotao);
+        }
+    }
+    public void validarTodosCamposVazios() {
+        getDriver().findElement(By.xpath(retornarCliqueMenuContas())).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuListar())).click();
+        String tabelaVazia = getDriver().findElement(By.xpath(retornarCorpoTabelaContas())).getText();
+        if (tabelaVazia.equals("")) {
+            executarInserirConta();
+            getDriver().findElement(By.xpath(retornarCliqueMenuCriarMovimentacoes())).click();
+            getDriver().findElement(By.xpath(retornarCliqueBotaoSalvar())).click();
             verificarAssertivasTodosCamposVazios();
         } else {
-            getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Criar Movimentação']")).click();
-            getDriver().findElement(By.xpath("//div//form//button[normalize-space()='Salvar']")).click();
+            getDriver().findElement(By.xpath(retornarCliqueMenuCriarMovimentacoes())).click();
+            getDriver().findElement(By.xpath(retornarCliqueBotaoSalvar())).click();
             verificarAssertivasTodosCamposVaziosContaExcecao();
         }
     }
     public void validarCampoDataMovimentacaoCaracteresAlfabeticos(Movimentacao movimentacao) {
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Contas']")).click();
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Listar']")).click();
-        String tabelaVazia = getDriver().findElement(By.xpath("//table[@id='tabelaContas']//tbody")).getText();
+        getDriver().findElement(By.xpath(retornarCliqueMenuContas())).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuListar())).click();
+        String tabelaVazia = getDriver().findElement(By.xpath(retornarCorpoTabelaContas())).getText();
         if (tabelaVazia.equals("")) {
             executarInserirConta();
         }
         String msgDataMovimentacao;
 
-        getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Criar Movimentação']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuCriarMovimentacoes())).click();
 
         movimentacao.setIdentificadorDataMovimentacao("data_transacao");
         movimentacao.setDataMovimentacao("Data da Movimentação");
@@ -65,21 +84,21 @@ public class DSLMovimentacao extends BaseTest {
         comboSelect.selectByVisibleText("Conta1_Usuário1");
         movimentacao.setConta(comboSelect.getFirstSelectedOption().getText());
 
-        getDriver().findElement(By.xpath("//div//form//button[normalize-space()='Salvar']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueBotaoSalvar())).click();
         msgDataMovimentacao = retornarMensagemTela(getDriver().findElement(By.xpath("//div//ul//li[normalize-space()='Data da Movimentação inválida (DD/MM/YYYY)']")).getText());
 
         Assert.assertEquals("Data da Movimentação inválida (DD/MM/YYYY)",msgDataMovimentacao);
     }
     public void validarCampoDataMovimentacaoCaracteresAlfanumericos(Movimentacao movimentacao) {
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Contas']")).click();
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Listar']")).click();
-        String tabelaVazia = getDriver().findElement(By.xpath("//table[@id='tabelaContas']//tbody")).getText();
+        getDriver().findElement(By.xpath(retornarCliqueMenuContas())).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuListar())).click();
+        String tabelaVazia = getDriver().findElement(By.xpath(retornarCorpoTabelaContas())).getText();
         if (tabelaVazia.equals("")) {
             executarInserirConta();
         }
         String msgDataMovimentacao;
 
-        getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Criar Movimentação']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuCriarMovimentacoes())).click();
 
         movimentacao.setIdentificadorDataMovimentacao("data_transacao");
         movimentacao.setDataMovimentacao("2ab6202c");
@@ -107,21 +126,21 @@ public class DSLMovimentacao extends BaseTest {
         comboSelect.selectByVisibleText("Conta1_Usuário1");
         movimentacao.setConta(comboSelect.getFirstSelectedOption().getText());
 
-        getDriver().findElement(By.xpath("//div//form//button[normalize-space()='Salvar']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueBotaoSalvar())).click();
         msgDataMovimentacao = retornarMensagemTela(getDriver().findElement(By.xpath("//div//ul//li[normalize-space()='Data da Movimentação inválida (DD/MM/YYYY)']")).getText());
 
         Assert.assertEquals("Data da Movimentação inválida (DD/MM/YYYY)",msgDataMovimentacao);
     }
     public void validarCampoDataMovimentacaoCaracteresNumericosSemFormatacao(Movimentacao movimentacao) {
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Contas']")).click();
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Listar']")).click();
-        String tabelaVazia = getDriver().findElement(By.xpath("//table[@id='tabelaContas']//tbody")).getText();
+        getDriver().findElement(By.xpath(retornarCliqueMenuContas())).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuListar())).click();
+        String tabelaVazia = getDriver().findElement(By.xpath(retornarCorpoTabelaContas())).getText();
         if (tabelaVazia.equals("")) {
             executarInserirConta();
         }
         String msgDataMovimentacao;
 
-        getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Criar Movimentação']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuCriarMovimentacoes())).click();
 
         movimentacao.setIdentificadorDataMovimentacao("data_transacao");
         movimentacao.setDataMovimentacao("20062024");
@@ -149,15 +168,15 @@ public class DSLMovimentacao extends BaseTest {
         comboSelect.selectByVisibleText("Conta1_Usuário1");
         movimentacao.setConta(comboSelect.getFirstSelectedOption().getText());
 
-        getDriver().findElement(By.xpath("//div//form//button[normalize-space()='Salvar']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueBotaoSalvar())).click();
         msgDataMovimentacao = retornarMensagemTela(getDriver().findElement(By.xpath("//div//ul//li[normalize-space()='Data da Movimentação inválida (DD/MM/YYYY)']")).getText());
 
         Assert.assertEquals("Data da Movimentação inválida (DD/MM/YYYY)",msgDataMovimentacao);
     }
     public void validarCampoDataMovimentacaoMenorIgualDataAtual(Movimentacao movimentacao) {
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Contas']")).click();
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Listar']")).click();
-        String tabelaVazia = getDriver().findElement(By.xpath("//table[@id='tabelaContas']//tbody")).getText();
+        getDriver().findElement(By.xpath(retornarCliqueMenuContas())).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuListar())).click();
+        String tabelaVazia = getDriver().findElement(By.xpath(retornarCorpoTabelaContas())).getText();
         if (tabelaVazia.equals("")) {
             executarInserirConta();
         }
@@ -165,7 +184,7 @@ public class DSLMovimentacao extends BaseTest {
         String dataAtual = retornarDataAtual();
         String dataMovimentacaoMaiorDataAtual = retornarDataMovimentacaoMaiorDataAtual();
 
-        getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Criar Movimentação']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuCriarMovimentacoes())).click();
 
         movimentacao.setIdentificadorDataMovimentacao("data_transacao");
         movimentacao.setDataMovimentacao(dataMovimentacaoMaiorDataAtual);
@@ -193,21 +212,21 @@ public class DSLMovimentacao extends BaseTest {
         comboSelect.selectByVisibleText("Conta1_Usuário1");
         movimentacao.setConta(comboSelect.getFirstSelectedOption().getText());
 
-        getDriver().findElement(By.xpath("//div//form//button[normalize-space()='Salvar']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueBotaoSalvar())).click();
         msgDataMovimentacao = retornarMensagemTela(getDriver().findElement(By.xpath("//div//ul//li[contains(text(),'Data da Movimentação deve ser menor ou igual à data atual')]")).getText());
 
         Assert.assertEquals("Data da Movimentação deve ser menor ou igual à data atual",msgDataMovimentacao);
     }
     public void validarCampoDataPagamentoCaracteresAlfabeticos(Movimentacao movimentacao) {
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Contas']")).click();
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Listar']")).click();
-        String tabelaVazia = getDriver().findElement(By.xpath("//table[@id='tabelaContas']//tbody")).getText();
+        getDriver().findElement(By.xpath(retornarCliqueMenuContas())).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuListar())).click();
+        String tabelaVazia = getDriver().findElement(By.xpath(retornarCorpoTabelaContas())).getText();
         if (tabelaVazia.equals("")) {
             executarInserirConta();
         }
         String msgDataMovimentacao;
 
-        getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Criar Movimentação']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuCriarMovimentacoes())).click();
 
         movimentacao.setIdentificadorDataMovimentacao("data_transacao");
         movimentacao.setDataMovimentacao("20/06/2024");
@@ -235,21 +254,21 @@ public class DSLMovimentacao extends BaseTest {
         comboSelect.selectByVisibleText("Conta1_Usuário1");
         movimentacao.setConta(comboSelect.getFirstSelectedOption().getText());
 
-        getDriver().findElement(By.xpath("//div//form//button[normalize-space()='Salvar']")).click();
-        msgDataMovimentacao = retornarMensagemTela(getDriver().findElement(By.xpath("//div//ul//li[normalize-space()='Data do pagamento inválida (DD/MM/YYYY)']")).getText());
+        getDriver().findElement(By.xpath(retornarCliqueBotaoSalvar())).click();
+        msgDataMovimentacao = retornarMensagemTela(getDriver().findElement(By.xpath(retornarMensagemDataPagamentoInvalida())).getText());
 
         Assert.assertEquals("Data do pagamento inválida (DD/MM/YYYY)",msgDataMovimentacao);
     }
     public void validarCampoDataPagamentoCaracteresAlfanumericos(Movimentacao movimentacao) {
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Contas']")).click();
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Listar']")).click();
-        String tabelaVazia = getDriver().findElement(By.xpath("//table[@id='tabelaContas']//tbody")).getText();
+        getDriver().findElement(By.xpath(retornarCliqueMenuContas())).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuListar())).click();
+        String tabelaVazia = getDriver().findElement(By.xpath(retornarCorpoTabelaContas())).getText();
         if (tabelaVazia.equals("")) {
             executarInserirConta();
         }
         String msgDataMovimentacao;
 
-        getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Criar Movimentação']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuCriarMovimentacoes())).click();
 
         movimentacao.setIdentificadorDataMovimentacao("data_transacao");
         movimentacao.setDataMovimentacao("20/06/2024");
@@ -277,21 +296,21 @@ public class DSLMovimentacao extends BaseTest {
         comboSelect.selectByVisibleText("Conta1_Usuário1");
         movimentacao.setConta(comboSelect.getFirstSelectedOption().getText());
 
-        getDriver().findElement(By.xpath("//div//form//button[normalize-space()='Salvar']")).click();
-        msgDataMovimentacao = retornarMensagemTela(getDriver().findElement(By.xpath("//div//ul//li[normalize-space()='Data do pagamento inválida (DD/MM/YYYY)']")).getText());
+        getDriver().findElement(By.xpath(retornarCliqueBotaoSalvar())).click();
+        msgDataMovimentacao = retornarMensagemTela(getDriver().findElement(By.xpath(retornarMensagemDataPagamentoInvalida())).getText());
 
         Assert.assertEquals("Data do pagamento inválida (DD/MM/YYYY)",msgDataMovimentacao);
     }
     public void validarCampoDataPagamentoCaracteresNumericosSemFormatacao(Movimentacao movimentacao) {
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Contas']")).click();
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Listar']")).click();
-        String tabelaVazia = getDriver().findElement(By.xpath("//table[@id='tabelaContas']//tbody")).getText();
+        getDriver().findElement(By.xpath(retornarCliqueMenuContas())).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuListar())).click();
+        String tabelaVazia = getDriver().findElement(By.xpath(retornarCorpoTabelaContas())).getText();
         if (tabelaVazia.equals("")) {
             executarInserirConta();
         }
         String msgDataMovimentacao;
 
-        getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Criar Movimentação']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuCriarMovimentacoes())).click();
 
         movimentacao.setIdentificadorDataMovimentacao("data_transacao");
         movimentacao.setDataMovimentacao("20/06/2024");
@@ -319,21 +338,21 @@ public class DSLMovimentacao extends BaseTest {
         comboSelect.selectByVisibleText("Conta1_Usuário1");
         movimentacao.setConta(comboSelect.getFirstSelectedOption().getText());
 
-        getDriver().findElement(By.xpath("//div//form//button[normalize-space()='Salvar']")).click();
-        msgDataMovimentacao = retornarMensagemTela(getDriver().findElement(By.xpath("//div//ul//li[normalize-space()='Data do pagamento inválida (DD/MM/YYYY)']")).getText());
+        getDriver().findElement(By.xpath(retornarCliqueBotaoSalvar())).click();
+        msgDataMovimentacao = retornarMensagemTela(getDriver().findElement(By.xpath(retornarMensagemDataPagamentoInvalida())).getText());
 
         Assert.assertEquals("Data do pagamento inválida (DD/MM/YYYY)",msgDataMovimentacao);
     }
     public void validarCampoValorComoNumeroInvalido(Movimentacao movimentacao) {
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Contas']")).click();
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Listar']")).click();
-        String tabelaVazia = getDriver().findElement(By.xpath("//table[@id='tabelaContas']//tbody")).getText();
+        getDriver().findElement(By.xpath(retornarCliqueMenuContas())).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuListar())).click();
+        String tabelaVazia = getDriver().findElement(By.xpath(retornarCorpoTabelaContas())).getText();
         if (tabelaVazia.equals("")) {
             executarInserirConta();
         }
         String msgDataMovimentacao;
 
-        getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Criar Movimentação']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuCriarMovimentacoes())).click();
 
         movimentacao.setIdentificadorDataMovimentacao("data_transacao");
         movimentacao.setDataMovimentacao("20/06/2024");
@@ -361,21 +380,21 @@ public class DSLMovimentacao extends BaseTest {
         comboSelect.selectByVisibleText("Conta1_Usuário1");
         movimentacao.setConta(comboSelect.getFirstSelectedOption().getText());
 
-        getDriver().findElement(By.xpath("//div//form//button[normalize-space()='Salvar']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueBotaoSalvar())).click();
         msgDataMovimentacao = retornarMensagemTela(getDriver().findElement(By.xpath("//div//ul//li[normalize-space()='Valor deve ser um número']")).getText());
 
         Assert.assertEquals("Valor deve ser um número",msgDataMovimentacao);
     }
     public void criarMovimentacaoReceitaPendenteDataAtual(Movimentacao movimentacao) {
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Contas']")).click();
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Listar']")).click();
-        String tabelaVazia = getDriver().findElement(By.xpath("//table[@id='tabelaContas']//tbody")).getText();
+        getDriver().findElement(By.xpath(retornarCliqueMenuContas())).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuListar())).click();
+        String tabelaVazia = getDriver().findElement(By.xpath(retornarCorpoTabelaContas())).getText();
         if (tabelaVazia.equals("")) {
             executarInserirConta();
         }
         String msgCadastroSucesso;
 
-        getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Criar Movimentação']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuCriarMovimentacoes())).click();
 
         movimentacao.setSetIdentificadorTipoMovimentacao("tipo");
         WebElement selectTipoMovimentacao = getDriver().findElement(By.id(movimentacao.getSetIdentificadorTipoMovimentacao()));
@@ -414,21 +433,21 @@ public class DSLMovimentacao extends BaseTest {
 
         getDriver().findElement(By.cssSelector("#status_pendente")).click();
 
-        getDriver().findElement(By.xpath("//div//form//button[normalize-space()='Salvar']")).click();
-        msgCadastroSucesso = retornarMensagemTela(getDriver().findElement(By.xpath("//div[@role='alert']")).getText());
+        getDriver().findElement(By.xpath(retornarCliqueBotaoSalvar())).click();
+        msgCadastroSucesso = retornarMensagemTela(getDriver().findElement(By.xpath(retornarMensagemGenerica())).getText());
 
         Assert.assertEquals("Movimentação adicionada com sucesso!",msgCadastroSucesso);
     }
     public void criarMovimentacaoReceitaPagaDataAtual(Movimentacao movimentacao) {
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Contas']")).click();
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Listar']")).click();
-        String tabelaVazia = getDriver().findElement(By.xpath("//table[@id='tabelaContas']//tbody")).getText();
+        getDriver().findElement(By.xpath(retornarCliqueMenuContas())).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuListar())).click();
+        String tabelaVazia = getDriver().findElement(By.xpath(retornarCorpoTabelaContas())).getText();
         if (tabelaVazia.equals("")) {
             executarInserirConta();
         }
         String msgCadastroSucesso;
 
-        getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Criar Movimentação']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuCriarMovimentacoes())).click();
 
         movimentacao.setSetIdentificadorTipoMovimentacao("tipo");
         WebElement selectTipoMovimentacao = getDriver().findElement(By.id(movimentacao.getSetIdentificadorTipoMovimentacao()));
@@ -469,21 +488,21 @@ public class DSLMovimentacao extends BaseTest {
 
         getDriver().findElement(By.cssSelector("#status_pago")).click();
 
-        getDriver().findElement(By.xpath("//div//form//button[normalize-space()='Salvar']")).click();
-        msgCadastroSucesso = retornarMensagemTela(getDriver().findElement(By.xpath("//div[@role='alert' and .='Movimentação adicionada com sucesso!']")).getText());
+        getDriver().findElement(By.xpath(retornarCliqueBotaoSalvar())).click();
+        msgCadastroSucesso = retornarMensagemTela(getDriver().findElement(By.xpath(retornarMensagemGenerica())).getText());
 
         Assert.assertEquals("Movimentação adicionada com sucesso!",msgCadastroSucesso);
     }
     public void criarMovimentacaoDespesaPendenteDataAtual(Movimentacao movimentacao) {
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Contas']")).click();
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Listar']")).click();
-        String tabelaVazia = getDriver().findElement(By.xpath("//table[@id='tabelaContas']//tbody")).getText();
+        getDriver().findElement(By.xpath(retornarCliqueMenuContas())).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuListar())).click();
+        String tabelaVazia = getDriver().findElement(By.xpath(retornarCorpoTabelaContas())).getText();
         if (tabelaVazia.equals("")) {
             executarInserirConta();
         }
         String msgCadastroSucesso;
 
-        getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Criar Movimentação']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuCriarMovimentacoes())).click();
 
         movimentacao.setSetIdentificadorTipoMovimentacao("tipo");
         WebElement selectTipoMovimentacao = getDriver().findElement(By.id(movimentacao.getSetIdentificadorTipoMovimentacao()));
@@ -522,21 +541,21 @@ public class DSLMovimentacao extends BaseTest {
 
         getDriver().findElement(By.cssSelector("#status_pendente")).click();
 
-        getDriver().findElement(By.xpath("//div//form//button[normalize-space()='Salvar']")).click();
-        msgCadastroSucesso = retornarMensagemTela(getDriver().findElement(By.xpath("//div[@role='alert']")).getText());
+        getDriver().findElement(By.xpath(retornarCliqueBotaoSalvar())).click();
+        msgCadastroSucesso = retornarMensagemTela(getDriver().findElement(By.xpath(retornarMensagemGenerica())).getText());
 
         Assert.assertEquals("Movimentação adicionada com sucesso!",msgCadastroSucesso);
     }
     public void criarMovimentacaoDespesaPagaDataAtual(Movimentacao movimentacao) {
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Contas']")).click();
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Listar']")).click();
-        String tabelaVazia = getDriver().findElement(By.xpath("//table[@id='tabelaContas']//tbody")).getText();
+        getDriver().findElement(By.xpath(retornarCliqueMenuContas())).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuListar())).click();
+        String tabelaVazia = getDriver().findElement(By.xpath(retornarCorpoTabelaContas())).getText();
         if (tabelaVazia.equals("")) {
             executarInserirConta();
         }
         String msgCadastroSucesso;
 
-        getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Criar Movimentação']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuCriarMovimentacoes())).click();
 
         movimentacao.setSetIdentificadorTipoMovimentacao("tipo");
         WebElement selectTipoMovimentacao = getDriver().findElement(By.id(movimentacao.getSetIdentificadorTipoMovimentacao()));
@@ -575,34 +594,52 @@ public class DSLMovimentacao extends BaseTest {
 
         getDriver().findElement(By.cssSelector("#status_pago")).click();
 
-        getDriver().findElement(By.xpath("//div//form//button[normalize-space()='Salvar']")).click();
-        msgCadastroSucesso = retornarMensagemTela(getDriver().findElement(By.xpath("//div[@role='alert']")).getText());
+        getDriver().findElement(By.xpath(retornarCliqueBotaoSalvar())).click();
+        msgCadastroSucesso = retornarMensagemTela(getDriver().findElement(By.xpath(retornarMensagemGenerica())).getText());
 
         Assert.assertEquals("Movimentação adicionada com sucesso!",msgCadastroSucesso);
     }
-    /* ______ ELEMENTOS DE TEXTO ______ */
+    /* ______ TELA MOVIMENTAÇÃO ______ */
 
-    /* ______ ELEMENTOS DE TELA ______ */
-    public void validarTelaMovimentacao(Login login) {
-        executarPreCondicoes(login);
-
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Contas']")).click();
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Listar']")).click();
-        String tabelaVazia = getDriver().findElement(By.xpath("//table[@id='tabelaContas']//tbody")).getText();
-        if (tabelaVazia.equals("")) {
-            executarInserirConta();
-
-            getDriver().findElement(By.xpath("//div[@id='navbar']//ul//li//a[normalize-space()='Criar Movimentação']")).click();
-
-            String url = getDriver().getCurrentUrl();
-            Assert.assertEquals("https://seubarriga.wcaquino.me/movimentacao",url);
-
-            String nomeBotao;
-            nomeBotao = getDriver().findElement(By.xpath("//div//form//button[normalize-space()='Salvar']")).getText();
-            Assert.assertEquals("Salvar",nomeBotao);
-        }
+    /* ______ ELEMENTOS DE MENU ______ */
+    private String retornarCliqueMenuContas() {
+        String menuContas = "//div[@id='navbar']//a[normalize-space()='Contas']";
+        return menuContas;
     }
-    /* ______ ELEMENTOS DE TELA ______ */
+    private String retornarCliqueMenuListar() {
+        String menuListar = "//div[@id='navbar']//a[normalize-space()='Listar']";
+        return menuListar;
+    }
+    private String retornarCliqueMenuCriarMovimentacoes() {
+        String menuCriarMovimentacoes = "//div[@id='navbar']//ul//li//a[normalize-space()='Criar Movimentação']";
+        return menuCriarMovimentacoes;
+    }
+    /* ______ ELEMENTOS DE MENU ______ */
+
+    /* ______ ELEMENTOS DE BOTÃO ______ */
+    private String retornarCliqueBotaoSalvar() {
+        String btnSalvar = "//div//form//button[normalize-space()='Salvar']";
+        return  btnSalvar;
+    }
+    /* ______ ELEMENTOS DE BOTÃO ______ */
+
+    /* ______ ELEMENTOS DE TABELA ______ */
+    private String retornarCorpoTabelaContas() {
+        String corpoTabelaContas = "//table[@id='tabelaContas']//tbody";
+        return corpoTabelaContas;
+    }
+    /* ______ ELEMENTOS DE TABELA ______ */
+
+    /* ______ ELEMENTOS DE MENSAGEM ______ */
+    private String retornarMensagemGenerica() {
+        String msg = "//div[@role='alert']";
+        return msg;
+    }
+    private String retornarMensagemDataPagamentoInvalida() {
+        String msg = "//div//ul//li[normalize-space()='Data do pagamento inválida (DD/MM/YYYY)']";
+        return msg;
+    }
+    /* ______ ELEMENTOS DE MENSAGEM ______ */
 
     /* ______ PROCEDIMENTO REUTILIZADO NESTA PAGE ______ */
     private void verificarAssertivasTodosCamposVazios() {
