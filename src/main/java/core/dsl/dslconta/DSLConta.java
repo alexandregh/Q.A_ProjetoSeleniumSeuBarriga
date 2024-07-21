@@ -9,63 +9,63 @@ import org.openqa.selenium.By;
 import static core.drivefactory.DriveFactory.getDriver;
 
 public class DSLConta extends BaseTest {
-    /* ______ ELEMENTOS DE TEXTO ______ */
+    /* ______ TELA CONTA ______ */
     public void inserirConta(Login login,Conta conta) {
         executarPreCondicoes(login);
 
         conta.setIdentificadorNome("nome");
         conta.setNome("Conta1_Usuário1");
 
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Contas']")).click();
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Listar']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuContas())).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuListar())).click();
 
-        String tabelaVazia = retornarNomeObjeto(getDriver().findElement(By.xpath("//table[@id='tabelaContas']//tbody")).getText());
+        String tabelaVazia = retornarNomeObjeto(getDriver().findElement(By.xpath(retornarCorpoTabelaContas())).getText());
         if (tabelaVazia.equals("")) {
-            getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Contas']")).click();
-            getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Adicionar']")).click();
+            getDriver().findElement(By.xpath(retornarCliqueMenuContas())).click();
+            getDriver().findElement(By.xpath(retornarCliqueMenuAdicionar())).click();
 
             String url = getDriver().getCurrentUrl();
             Assert.assertEquals("https://seubarriga.wcaquino.me/addConta",url);
 
-            String txtBtnSalvar = retornarNomeBotao(getDriver().findElement(By.xpath("//button[normalize-space()='Salvar']")).getText());
+            String txtBtnSalvar = retornarNomeBotao(getDriver().findElement(By.xpath(retornarCliqueBotaoSalvar())).getText());
             Assert.assertEquals("Salvar",txtBtnSalvar);
 
             getDriver().findElement(By.id(conta.getIdentificadorNome())).sendKeys(conta.getNome());
-            getDriver().findElement(By.xpath("//button[normalize-space()='Salvar']")).click();
+            getDriver().findElement(By.xpath(retornarCliqueBotaoSalvar())).click();
 
             String msgConta;
-            msgConta = retornarMensagemTela(getDriver().findElement(By.xpath("//div[@role='alert']")).getText());
+            msgConta = retornarMensagemTela(getDriver().findElement(By.xpath(retornarMensagemGenerica())).getText());
 
             Assert.assertEquals("Conta adicionada com sucesso!",msgConta);
 
             String txtConta;
-            txtConta = retornarNomeObjeto(getDriver().findElement(By.xpath("//table[@id='tabelaContas']//tbody//td[normalize-space()='" + conta.getNome() + "']")).getText());
+            txtConta = retornarNomeObjeto(getDriver().findElement(By.xpath(retornarCorpoTabelaContas() + "//td[normalize-space()='" + conta.getNome() + "']")).getText());
 
             Assert.assertEquals("Conta1_Usuário1",txtConta);
         }
         if (!tabelaVazia.equals("")) {
-            getDriver().findElement(By.xpath("//table[@id='tabelaContas']//tbody//tr//a[2]")).click();
-            String msgContaRemovida = retornarMensagemTela(getDriver().findElement(By.xpath("//div[@role='alert']")).getText());
+            getDriver().findElement(By.xpath(retornarCorpoTabelaContas() + "//tr//a[2]")).click();
+            String msgContaRemovida = retornarMensagemTela(getDriver().findElement(By.xpath(retornarMensagemGenerica())).getText());
 
             Assert.assertEquals("Conta removida com sucesso!",msgContaRemovida);
 
-            getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Contas']")).click();
-            getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Adicionar']")).click();
+            getDriver().findElement(By.xpath(retornarCliqueMenuContas())).click();
+            getDriver().findElement(By.xpath(retornarCliqueMenuAdicionar())).click();
 
             String url = getDriver().getCurrentUrl();
             Assert.assertEquals("https://seubarriga.wcaquino.me/addConta",url);
 
-            String txtBtnSalvar = retornarNomeBotao(getDriver().findElement(By.xpath("//button[normalize-space()='Salvar']")).getText());
+            String txtBtnSalvar = retornarNomeBotao(getDriver().findElement(By.xpath(retornarCliqueBotaoSalvar())).getText());
             Assert.assertEquals("Salvar",txtBtnSalvar);
 
             getDriver().findElement(By.id(conta.getIdentificadorNome())).sendKeys(conta.getNome());
-            getDriver().findElement(By.xpath("//button[normalize-space()='Salvar']")).click();
+            getDriver().findElement(By.xpath(retornarCliqueBotaoSalvar())).click();
 
             String msgConta;
-            msgConta = retornarMensagemTela(getDriver().findElement(By.xpath("//div[@role='alert']")).getText());
+            msgConta = retornarMensagemTela(getDriver().findElement(By.xpath(retornarMensagemGenerica())).getText());
             Assert.assertEquals("Conta adicionada com sucesso!",msgConta);
         }
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Sair']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueBotaoSair())).click();
     }
     public void inserirContaCadastrada(Login login,Conta conta) {
         executarPreCondicoes(login);
@@ -73,41 +73,41 @@ public class DSLConta extends BaseTest {
         conta.setIdentificadorNome("nome");
         conta.setNome("Conta1_Usuário1");
 
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Contas']")).click();
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Adicionar']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuContas())).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuAdicionar())).click();
 
         String url = getDriver().getCurrentUrl();
         Assert.assertEquals("https://seubarriga.wcaquino.me/addConta",url);
 
         String txtBtnSalvar;
-        txtBtnSalvar = retornarNomeBotao(getDriver().findElement(By.xpath("//button[normalize-space()='Salvar']")).getText());
+        txtBtnSalvar = retornarNomeBotao(getDriver().findElement(By.xpath(retornarCliqueBotaoSalvar())).getText());
         Assert.assertEquals("Salvar",txtBtnSalvar);
 
         getDriver().findElement(By.id(conta.getIdentificadorNome())).sendKeys(conta.getNome());
-        getDriver().findElement(By.xpath("//button[normalize-space()='Salvar']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueBotaoSalvar())).click();
 
         String msgContaCadastrada;
-        msgContaCadastrada = retornarMensagemTela(getDriver().findElement(By.xpath("//div[@role='alert']")).getText());
+        msgContaCadastrada = retornarMensagemTela(getDriver().findElement(By.xpath(retornarMensagemGenerica())).getText());
         Assert.assertEquals("Já existe uma conta com esse nome!", msgContaCadastrada);
 
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Sair']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueBotaoSair())).click();
     }
     public void alterarConta(Login login,Conta conta) {
         executarPreCondicoes(login);
 
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Contas']")).click();
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Listar']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuContas())).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuListar())).click();
 
         String url = getDriver().getCurrentUrl();
         Assert.assertEquals("https://seubarriga.wcaquino.me/contas",url);
 
-        conta.setNome(retornarMensagemTela(getDriver().findElement(By.xpath("//table[@id='tabelaContas']//tbody//td[normalize-space()='Conta1_Usuário1']")).getText()));
+        conta.setNome(retornarMensagemTela(getDriver().findElement(By.xpath(retornarCorpoTabelaContas() + "//td[normalize-space()='Conta1_Usuário1']")).getText()));
         Assert.assertEquals("Conta1_Usuário1",conta.getNome());
 
         getDriver().findElement(By.xpath("//span[@class='glyphicon glyphicon-edit']")).click();
 
         String txtBtnSalvar;
-        txtBtnSalvar = retornarNomeBotao(getDriver().findElement(By.xpath("//button[normalize-space()='Salvar']")).getText());
+        txtBtnSalvar = retornarNomeBotao(getDriver().findElement(By.xpath(retornarCliqueBotaoSalvar())).getText());
         Assert.assertEquals("Salvar",txtBtnSalvar);
 
         conta.setIdentificadorNome("nome");
@@ -115,41 +115,68 @@ public class DSLConta extends BaseTest {
 
         getDriver().findElement(By.id("nome")).clear();
         getDriver().findElement(By.id(conta.getIdentificadorNome())).sendKeys(conta.getNome());
-        getDriver().findElement(By.xpath("//button[normalize-space()='Salvar']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueBotaoSalvar())).click();
 
         String msgContaAlterada;
-        msgContaAlterada = retornarMensagemTela(getDriver().findElement(By.xpath("//div[@role='alert']")).getText());
+        msgContaAlterada = retornarMensagemTela(getDriver().findElement(By.xpath(retornarMensagemGenerica())).getText());
         Assert.assertEquals("Conta alterada com sucesso!", msgContaAlterada);
 
-        conta.setNome(retornarMensagemTela(getDriver().findElement(By.xpath("//table[@id='tabelaContas']//tbody//td[normalize-space()='" + conta.getNome() + "']")).getText()));
+        conta.setNome(retornarMensagemTela(getDriver().findElement(By.xpath(retornarCorpoTabelaContas() + "//td[normalize-space()='" + conta.getNome() + "']")).getText()));
 
         Assert.assertEquals("Conta1_Usuário10",conta.getNome());
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Sair']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueBotaoSair())).click();
     }
     public void removerConta(Login login,Conta conta) {
         executarPreCondicoes(login);
 
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Contas']")).click();
-        getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Listar']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuContas())).click();
+        getDriver().findElement(By.xpath(retornarCliqueMenuListar())).click();
 
         String url = getDriver().getCurrentUrl();
         Assert.assertEquals("https://seubarriga.wcaquino.me/contas",url);
 
-        String tabelaVazia = retornarNomeObjeto(getDriver().findElement(By.xpath("//table[@id='tabelaContas']//tbody")).getText());
+        String tabelaVazia = retornarNomeObjeto(getDriver().findElement(By.xpath(retornarCorpoTabelaContas())).getText());
         if (tabelaVazia.equals("")) {
-            getDriver().findElement(By.xpath("//div[@id='navbar']//a[normalize-space()='Sair']")).click();
+            getDriver().findElement(By.xpath(retornarCliqueBotaoSair())).click();
         }
         if (!tabelaVazia.equals("")) {
-            conta.setNome(retornarNomeObjeto(getDriver().findElement(By.xpath("//table[@id='tabelaContas']//tbody//td[1]")).getText()));
+            conta.setNome(retornarNomeObjeto(getDriver().findElement(By.xpath(retornarCorpoTabelaContas() + "//td[1]")).getText()));
             Assert.assertEquals("Conta1_Usuário10",conta.getNome());
 
-            getDriver().findElement(By.xpath("//table[@id='tabelaContas']//tbody//tr//a[2]")).click();
-            String msgContaRemovida = retornarMensagemTela(getDriver().findElement(By.xpath("//div[@role='alert']")).getText());
+            getDriver().findElement(By.xpath(retornarCorpoTabelaContas() + "//tr//a[2]")).click();
+            String msgContaRemovida = retornarMensagemTela(getDriver().findElement(By.xpath(retornarMensagemGenerica())).getText());
             Assert.assertEquals("Conta removida com sucesso!",msgContaRemovida);
 
-            conta.setNome(retornarNomeObjeto(getDriver().findElement(By.xpath("//table[@id='tabelaContas']//tbody")).getText()));
+            conta.setNome(retornarNomeObjeto(getDriver().findElement(By.xpath(retornarCorpoTabelaContas())).getText()));
             Assert.assertEquals("",conta.getNome());
         }
     }
-    /* ______ ELEMENTOS DE TEXTO ______ */
+    /* ______ TELA CONTA ______ */
+
+    /* ______ ELEMENTOS DE MENU ______ */
+    private String retornarCliqueMenuContas() {
+        return "//div[@id='navbar']//a[normalize-space()='Contas']";
+    }
+    private String retornarCliqueMenuListar() {
+        return "//div[@id='navbar']//a[normalize-space()='Listar']";
+    }
+    private String retornarCliqueMenuAdicionar() { return "//div[@id='navbar']//a[normalize-space()='Adicionar']"; }
+    /* ______ ELEMENTOS DE MENU ______ */
+
+    /* ______ ELEMENTOS DE BOTÃO ______ */
+    private String retornarCliqueBotaoSalvar() { return "//button[normalize-space()='Salvar']"; }
+    private String retornarCliqueBotaoSair() { return  "//div[@id='navbar']//a[normalize-space()='Sair']"; }
+    /* ______ ELEMENTOS DE BOTÃO ______ */
+
+    /* ______ ELEMENTOS DE TABELA ______ */
+    private String retornarCorpoTabelaContas() {
+        return "//table[@id='tabelaContas']//tbody";
+    }
+    /* ______ ELEMENTOS DE TABELA ______ */
+
+    /* ______ ELEMENTOS DE MENSAGEM ______ */
+    private String retornarMensagemGenerica() {
+        return "//div[@role='alert']";
+    }
+    /* ______ ELEMENTOS DE MENSAGEM ______ */
 }

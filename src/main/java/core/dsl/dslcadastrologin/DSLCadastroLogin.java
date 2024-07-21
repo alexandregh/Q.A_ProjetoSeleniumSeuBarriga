@@ -8,7 +8,16 @@ import org.openqa.selenium.By;
 import static core.drivefactory.DriveFactory.getDriver;
 
 public class DSLCadastroLogin extends DSLBase {
-    /* ______ ELEMENTOS DE TEXTO ______ */
+    /* ______ TELA CADASTRO LOGIN ______ */
+    public void validarTelaNovoUsuario() {
+        getDriver().findElement(By.xpath(retornarCliqueNovoUsuario())).click();
+
+        String url = getDriver().getCurrentUrl();
+        Assert.assertEquals("https://seubarriga.wcaquino.me/cadastro",url);
+
+        String nomeBotao = getDriver().findElement(By.xpath(retornarNomeBotaoCadastrar())).getAttribute("value");
+        Assert.assertEquals("Cadastrar",nomeBotao);
+    }
     public void inserirEmailSenha(CadastroLogin cadastroLogin) {
         String msgNome;
 
@@ -17,11 +26,11 @@ public class DSLCadastroLogin extends DSLBase {
         cadastroLogin.setIdentificadorSenha("senha");
         cadastroLogin.setSenha("123456");
 
-        getDriver().findElement(By.cssSelector("a[href='/cadastro']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueNovoUsuario())).click();
         getDriver().findElement(By.id(cadastroLogin.getIdentificadorEmail())).sendKeys(cadastroLogin.getEmail());
         getDriver().findElement(By.id(cadastroLogin.getIdentificadorSenha())).sendKeys(cadastroLogin.getSenha());
-        getDriver().findElement(By.xpath("//input[@value='Cadastrar']")).click();
-        msgNome = retornarMensagemTela(getDriver().findElement(By.xpath("//div[@role='alert']")).getText());
+        getDriver().findElement(By.xpath(retornarCliqueBotaoCadastro())).click();
+        msgNome = retornarMensagemTela(getDriver().findElement(By.xpath(retornarMensagemGenerica())).getText());
 
         Assert.assertEquals("Nome é um campo obrigatório",msgNome);
     }
@@ -33,11 +42,11 @@ public class DSLCadastroLogin extends DSLBase {
         cadastroLogin.setIdentificadorSenha("senha");
         cadastroLogin.setSenha("123456");
 
-        getDriver().findElement(By.cssSelector("a[href='/cadastro']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueNovoUsuario())).click();
         getDriver().findElement(By.id(cadastroLogin.getIdentificadorNome())).sendKeys(cadastroLogin.getNome());
         getDriver().findElement(By.id(cadastroLogin.getIdentificadorSenha())).sendKeys(cadastroLogin.getSenha());
-        getDriver().findElement(By.xpath("//input[@value='Cadastrar']")).click();
-        msgEmail = retornarMensagemTela(getDriver().findElement(By.xpath("//div[@role='alert']")).getText());
+        getDriver().findElement(By.xpath(retornarCliqueBotaoCadastro())).click();
+        msgEmail = retornarMensagemTela(getDriver().findElement(By.xpath(retornarMensagemGenerica())).getText());
 
         Assert.assertEquals("Email é um campo obrigatório",msgEmail);
     }
@@ -49,11 +58,11 @@ public class DSLCadastroLogin extends DSLBase {
         cadastroLogin.setIdentificadorEmail("email");
         cadastroLogin.setEmail("sxandeogrande@yahoo.com.br");
 
-        getDriver().findElement(By.cssSelector("a[href='/cadastro']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueNovoUsuario())).click();
         getDriver().findElement(By.id(cadastroLogin.getIdentificadorNome())).sendKeys(cadastroLogin.getNome());
         getDriver().findElement(By.id(cadastroLogin.getIdentificadorEmail())).sendKeys(cadastroLogin.getEmail());
-        getDriver().findElement(By.xpath("//input[@value='Cadastrar']")).click();
-        msgEmail = retornarMensagemTela(getDriver().findElement(By.xpath("//div[@role='alert']")).getText());
+        getDriver().findElement(By.xpath(retornarCliqueBotaoCadastro())).click();
+        msgEmail = retornarMensagemTela(getDriver().findElement(By.xpath(retornarMensagemGenerica())).getText());
 
         Assert.assertEquals("Senha é um campo obrigatório",msgEmail);
     }
@@ -62,8 +71,8 @@ public class DSLCadastroLogin extends DSLBase {
         String msgEmail;
         String msgSenha;
 
-        getDriver().findElement(By.cssSelector("a[href='/cadastro']")).click();
-        getDriver().findElement(By.xpath("//input[@value='Cadastrar']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueNovoUsuario())).click();
+        getDriver().findElement(By.xpath(retornarCliqueBotaoCadastro())).click();
         msgNome = retornarMensagemTela(getDriver().findElement(By.xpath("//div[normalize-space()='Nome é um campo obrigatório']")).getText());
         msgEmail = retornarMensagemTela(getDriver().findElement(By.xpath("//div[normalize-space()='Email é um campo obrigatório']")).getText());
         msgSenha = retornarMensagemTela(getDriver().findElement(By.xpath("//div[normalize-space()='Senha é um campo obrigatório']")).getText());
@@ -82,27 +91,30 @@ public class DSLCadastroLogin extends DSLBase {
         cadastroLogin.setIdentificadorSenha("senha");
         cadastroLogin.setSenha("123456");
 
-        getDriver().findElement(By.cssSelector("a[href='/cadastro']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueNovoUsuario())).click();
         getDriver().findElement(By.id(cadastroLogin.getIdentificadorNome())).sendKeys(cadastroLogin.getNome());
         getDriver().findElement(By.id(cadastroLogin.getIdentificadorEmail())).sendKeys(cadastroLogin.getEmail());
         getDriver().findElement(By.id(cadastroLogin.getIdentificadorSenha())).sendKeys(cadastroLogin.getSenha());
-        getDriver().findElement(By.xpath("//input[@value='Cadastrar']")).click();
-        msgEmailUtilizado = retornarMensagemTela(getDriver().findElement(By.xpath("//div[@role='alert']")).getText());
+        getDriver().findElement(By.xpath(retornarCliqueBotaoCadastro())).click();
+        msgEmailUtilizado = retornarMensagemTela(getDriver().findElement(By.xpath(retornarMensagemGenerica())).getText());
 
         Assert.assertEquals("Endereço de email já utilizado",msgEmailUtilizado);
     }
-    /* ______ ELEMENTOS DE TEXTO ______ */
+    /* ______ TELA CADASTRO LOGIN ______ */
 
-    /* ______ ELEMENTOS DE TELA ______ */
-    public void validarTelaNovoUsuario() {
-        getDriver().findElement(By.xpath("//a[normalize-space()='Novo usuário?']")).click();
-
-        String url = getDriver().getCurrentUrl();
-        Assert.assertEquals("https://seubarriga.wcaquino.me/cadastro",url);
-
-        String nomeBotao;
-        nomeBotao = getDriver().findElement(By.xpath("//div//form//input[@value='Cadastrar']")).getAttribute("value");
-        Assert.assertEquals("Cadastrar",nomeBotao);
+    /* ______ ELEMENTOS DE BOTÃO ______ */
+    private String retornarCliqueNovoUsuario() {
+        return "//div[@id='bs-example-navbar-collapse-1']//ul//li//a[normalize-space()='Novo usuário?']";
     }
-    /* ______ ELEMENTOS DE TELA ______ */
+    private String retornarCliqueBotaoCadastro() { return "//div//form//input[@value='Cadastrar']"; }
+    private String retornarNomeBotaoCadastrar() {
+        return "//div//form//input[@value='Cadastrar']";
+    }
+    /* ______ ELEMENTOS DE BOTÃO ______ */
+
+    /* ______ ELEMENTOS DE MENSAGEM ______ */
+    private String retornarMensagemGenerica() {
+        return "//div[@role='alert']";
+    }
+    /* ______ ELEMENTOS DE MENSAGEM ______ */
 }

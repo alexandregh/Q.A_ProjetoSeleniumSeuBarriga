@@ -9,7 +9,15 @@ import org.openqa.selenium.By;
 import static core.drivefactory.DriveFactory.getDriver;
 
 public class DSLLogin extends DSLBase {
-    /* ______ ELEMENTOS DE TEXTO ______ */
+    /* ______ TELA LOGIN ______ */
+    public void validarTelaLogin() {
+        String url = getDriver().getCurrentUrl();
+        Assert.assertEquals("https://seubarriga.wcaquino.me/login",url);
+
+        String nomeBotao;
+        nomeBotao = getDriver().findElement(By.xpath(retornarNomeBotaoEntrar())).getText();
+        Assert.assertEquals("Entrar",nomeBotao);
+    }
     public void inserirSenha(Login login) {
         String msgEmail;
 
@@ -17,7 +25,7 @@ public class DSLLogin extends DSLBase {
         login.setSenha("123456");
 
         getDriver().findElement(By.id(login.getIdentificadorSenha())).sendKeys(login.getSenha());
-        getDriver().findElement(By.xpath("//button[normalize-space()='Entrar']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueBotaoEntrar())).click();
         msgEmail = retornarMensagemTela(getDriver().findElement(By.xpath("//div[normalize-space()='Email é um campo obrigatório']")).getText());
 
         Assert.assertEquals("Email é um campo obrigatório",msgEmail);
@@ -29,7 +37,7 @@ public class DSLLogin extends DSLBase {
         login.setEmail("sxandeogrande@yahoo.com.br");
 
         getDriver().findElement(By.id(login.getIdentificadorEmail())).sendKeys(login.getEmail());
-        getDriver().findElement(By.xpath("//button[normalize-space()='Entrar']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueBotaoEntrar())).click();
         msgSenha = retornarMensagemTela(getDriver().findElement(By.xpath("//div[normalize-space()='Senha é um campo obrigatório']")).getText());
 
         Assert.assertEquals("Senha é um campo obrigatório",msgSenha);
@@ -38,7 +46,7 @@ public class DSLLogin extends DSLBase {
         String msgEmail;
         String msgSenha;
 
-        getDriver().findElement(By.xpath("//button[normalize-space()='Entrar']")).click();
+        getDriver().findElement(By.xpath(retornarCliqueBotaoEntrar())).click();
         msgEmail = retornarMensagemTela(getDriver().findElement(By.xpath("//div[normalize-space()='Email é um campo obrigatório']")).getText());
         msgSenha = retornarMensagemTela(getDriver().findElement(By.xpath("//div[normalize-space()='Senha é um campo obrigatório']")).getText());
 
@@ -55,8 +63,8 @@ public class DSLLogin extends DSLBase {
 
         getDriver().findElement(By.id(login.getIdentificadorEmail())).sendKeys(login.getEmail());
         getDriver().findElement(By.id(login.getIdentificadorSenha())).sendKeys(login.getSenha());
-        getDriver().findElement(By.xpath("//button[normalize-space()='Entrar']")).click();
-        msgUsuarioInexistente = retornarMensagemTela(getDriver().findElement(By.xpath("//div[@role='alert']")).getText());
+        getDriver().findElement(By.xpath(retornarCliqueBotaoEntrar())).click();
+        msgUsuarioInexistente = retornarMensagemTela(getDriver().findElement(By.xpath(retornarMensagemGenerica())).getText());
 
         Assert.assertEquals("Problemas com o login do usuário",msgUsuarioInexistente);
     }
@@ -71,8 +79,8 @@ public class DSLLogin extends DSLBase {
 
         getDriver().findElement(By.id(login.getIdentificadorEmail())).sendKeys(login.getEmail());
         getDriver().findElement(By.id(login.getIdentificadorSenha())).sendKeys(login.getSenha());
-        getDriver().findElement(By.xpath("//button[normalize-space()='Entrar']")).click();
-        msgUsuarioLogado = retornarMensagemTela(getDriver().findElement(By.xpath("//div[@role='alert']")).getText());
+        getDriver().findElement(By.xpath(retornarCliqueBotaoEntrar())).click();
+        msgUsuarioLogado = retornarMensagemTela(getDriver().findElement(By.xpath(retornarMensagemGenerica())).getText());
         btnSair = retornarNomeBotao(getDriver().findElement(By.cssSelector("a[href='/logout']")).getText());
 
         String usuario = retornarNomeObjeto(msgUsuarioLogado.substring(11));
@@ -83,14 +91,18 @@ public class DSLLogin extends DSLBase {
     }
     /* ______ ELEMENTOS DE TEXTO ______ */
 
-    /* ______ ELEMENTOS DE TELA ______ */
-    public void validarTelaLogin() {
-        String url = getDriver().getCurrentUrl();
-        Assert.assertEquals("https://seubarriga.wcaquino.me/login",url);
-
-        String nomeBotao;
-        nomeBotao = getDriver().findElement(By.xpath("//div//form//button[normalize-space()='Entrar']")).getText();
-        Assert.assertEquals("Entrar",nomeBotao);
+    /* ______ ELEMENTOS DE BOTÃO ______ */
+    private String retornarNomeBotaoEntrar() {
+        return "//div//form//button[normalize-space()='Entrar']";
     }
-    /* ______ ELEMENTOS DE TELA ______ */
+    private String retornarCliqueBotaoEntrar() {
+        return "//button[normalize-space()='Entrar']";
+    }
+    /* ______ ELEMENTOS DE BOTÃO ______ */
+
+    /* ______ ELEMENTOS DE MENSAGEM ______ */
+    private String retornarMensagemGenerica() {
+        return "//div[@role='alert']";
+    }
+    /* ______ ELEMENTOS DE MENSAGEM ______ */
 }
