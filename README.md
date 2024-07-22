@@ -1,4 +1,4 @@
-# ProjetoSeleniumSeuBarriga
+# Q.A_ProjetoSeleniumSeuBarriga
 ### Projeto de Automação Web do Sistema Seu Barriga com Selenium WebDriver.
 #### Descrição:
 O exemplo simula a automação de funcionalidades como: 
