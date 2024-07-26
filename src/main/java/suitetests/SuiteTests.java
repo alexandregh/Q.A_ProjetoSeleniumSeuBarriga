@@ -21,7 +21,7 @@ import static core.drivefactory.DriveFactory.killDriver;
 })
 public class SuiteTests {
     @AfterClass
-    public static void finalizaSuiteTests() {
+    public static void finalizarSuiteTests() {
         killDriver();
     }
 }

@@ -13,8 +13,8 @@ public class DriveFactory {
     private DriveFactory(){}
 
     public static WebDriver getDriver() {
-        final String tipoDriver = "webdriver.gecko.driver";
-        final String caminhoDriver = "src/main/resources/drivers/geckodriver-v0.33.0-win64/geckodriver.exe";
+        final String tipoDriver = "webdriver.chrome.driver";
+        final String caminhoDriver = "src/main/resources/drivers/chromedriver-win64/chromedriver.exe";
         if (driver == null) {
             System.setProperty(tipoDriver, caminhoDriver);
             switch (Properties.browser) {
